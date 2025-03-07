@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2wsabfiemu5t"]
+
+[ext_resource type="Texture2D" uid="uid://5eevpwkc38vk" path="res://graphics/planets/planet02_diffuse.png" id="1_hu7gv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_babac"]
+radius = 126.004
+
+[node name="Planet02" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("1_hu7gv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_babac")
