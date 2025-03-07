@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnr5kbh01tcuj"]
+
+[ext_resource type="Shader" uid="uid://c48245eavplev" path="res://planet.gdshader" id="1_1odxm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1odxm"]
+radius = 99.0202
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jcv8b"]
+shader = ExtResource("1_1odxm")
+shader_parameter/planet_color = Vector4(0.2, 0.6, 1, 1)
+shader_parameter/noise_scale = 5.0
+shader_parameter/shading_strength = 1.5
+shader_parameter/glow_intensity = 0.4
+
+[node name="Planet" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+motion_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_1odxm")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_jcv8b")
+offset_left = -63.0
+offset_top = -63.0
+offset_right = 63.0
+offset_bottom = 63.0
+color = Color(1, 1, 1, 0)

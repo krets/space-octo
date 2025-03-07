@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpgxs4q0shbgb"]
+
+[ext_resource type="Script" uid="uid://fa450acgvkpm" path="res://starfield.gd" id="1_pce2j"]
+
+[node name="Starfield" type="Node2D"]
+script = ExtResource("1_pce2j")

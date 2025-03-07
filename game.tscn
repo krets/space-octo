@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://rjbsb56jh2c7"]
+
+[ext_resource type="PackedScene" uid="uid://fi2ixmc5d567" path="res://player.tscn" id="2_e2o6t"]
+[ext_resource type="Script" uid="uid://ca1rlb55slbe" path="res://background.gd" id="2_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://bpgxs4q0shbgb" path="res://starfield.tscn" id="2_feb5d"]
+[ext_resource type="PackedScene" uid="uid://bnr5kbh01tcuj" path="res://planet.tscn" id="3_feb5d"]
+
+[sub_resource type="GDScript" id="GDScript_80nbo"]
+
+[node name="Game" type="Node2D"]
+script = SubResource("GDScript_80nbo")
+
+[node name="Player" parent="." instance=ExtResource("2_e2o6t")]
+z_index = 1
+position = Vector2(536, 321)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -2
+
+[node name="Background" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1936.0
+offset_bottom = 1091.0
+color = Color(0.0705882, 0.0705882, 0.160784, 1)
+script = ExtResource("2_fc0e3")
+
+[node name="Starfield" parent="CanvasLayer" instance=ExtResource("2_feb5d")]
+star_count = 100
+random_seed = 2
+star_color = Color(0.803982, 0.974855, 1, 1)
+
+[node name="Planet" parent="." instance=ExtResource("3_feb5d")]
+position = Vector2(382, 149)
