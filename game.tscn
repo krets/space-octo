@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://rjbsb56jh2c7"]
+[gd_scene load_steps=10 format=3 uid="uid://rjbsb56jh2c7"]
 
 [ext_resource type="PackedScene" uid="uid://fi2ixmc5d567" path="res://player.tscn" id="2_e2o6t"]
 [ext_resource type="Script" uid="uid://ca1rlb55slbe" path="res://background.gd" id="2_fc0e3"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bnr5kbh01tcuj" path="res://planet.tscn" id="3_feb5d"]
 [ext_resource type="PackedScene" uid="uid://y0pdriraaeus" path="res://scenes/planet_01.tscn" id="5_7jktm"]
 [ext_resource type="PackedScene" uid="uid://d2wsabfiemu5t" path="res://scenes/planet_02.tscn" id="6_ryrav"]
+[ext_resource type="PackedScene" uid="uid://1akyqn8025ed" path="res://scenes/planet_03.tscn" id="7_eow3j"]
+[ext_resource type="PackedScene" uid="uid://ce55cjhxa8q1r" path="res://scenes/planet_04.tscn" id="8_j5wjh"]
 
 [sub_resource type="GDScript" id="GDScript_80nbo"]
 
@@ -38,3 +40,9 @@ position = Vector2(1212, 605)
 
 [node name="Planet02" parent="." instance=ExtResource("6_ryrav")]
 position = Vector2(363, 829)
+
+[node name="Planet03" parent="." instance=ExtResource("7_eow3j")]
+position = Vector2(1683, 190)
+
+[node name="Planet04" parent="." instance=ExtResource("8_j5wjh")]
+position = Vector2(2376, 1638)

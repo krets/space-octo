@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://1akyqn8025ed"]
+
+[ext_resource type="Texture2D" uid="uid://d3x1d6e6xxp2v" path="res://graphics/planets/planet03_diffuse.png" id="1_8nv7p"]
+[ext_resource type="Texture2D" uid="uid://bv1id6ovlfoke" path="res://graphics/planets/planet03_normal.png" id="2_lhype"]
+[ext_resource type="Texture2D" uid="uid://03nc02v0end8" path="res://graphics/planets/planet03_specular.png" id="3_a5apl"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_6kmws"]
+diffuse_texture = ExtResource("1_8nv7p")
+normal_texture = ExtResource("2_lhype")
+specular_texture = ExtResource("3_a5apl")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o42cn"]
+radius = 126.004
+
+[node name="Planet03" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+light_mask = 2
+texture = SubResource("CanvasTexture_6kmws")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+visible = false
+shape = SubResource("CircleShape2D_o42cn")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="CharacterBody2D"]
+color = Color(0.304462, 0.304462, 0.304462, 1)
