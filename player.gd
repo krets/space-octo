@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var brake_speed: float = 300
 @export var rotation_speed: float = 5.0
 @export var max_speed: float = 400 
-
+	
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("turn_left"):
 		rotation -= rotation_speed * delta

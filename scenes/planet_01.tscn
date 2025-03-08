@@ -26,4 +26,4 @@ visible = false
 shape = SubResource("CircleShape2D_d1kmi")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="CharacterBody2D"]
-color = Color(0.304462, 0.304462, 0.304462, 1)
+color = Color(0.67069, 0.67069, 0.67069, 1)
