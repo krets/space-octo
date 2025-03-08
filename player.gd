@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
-var thrust_speed: float = 600
-var brake_speed: float = 300
-var rotation_speed: float = 5.0
-var max_speed: float = 400 
+@export var thrust_speed: float = 600
+@export var brake_speed: float = 300
+@export var rotation_speed: float = 5.0
+@export var max_speed: float = 400 
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("turn_left"):

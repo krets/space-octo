@@ -1,9 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://rjbsb56jh2c7"]
+[gd_scene load_steps=9 format=3 uid="uid://rjbsb56jh2c7"]
 
 [ext_resource type="PackedScene" uid="uid://fi2ixmc5d567" path="res://player.tscn" id="2_e2o6t"]
 [ext_resource type="Script" uid="uid://ca1rlb55slbe" path="res://background.gd" id="2_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://bpgxs4q0shbgb" path="res://starfield.tscn" id="2_feb5d"]
-[ext_resource type="PackedScene" uid="uid://bnr5kbh01tcuj" path="res://planet.tscn" id="3_feb5d"]
 [ext_resource type="PackedScene" uid="uid://y0pdriraaeus" path="res://scenes/planet_01.tscn" id="5_7jktm"]
 [ext_resource type="PackedScene" uid="uid://d2wsabfiemu5t" path="res://scenes/planet_02.tscn" id="6_ryrav"]
 [ext_resource type="PackedScene" uid="uid://1akyqn8025ed" path="res://scenes/planet_03.tscn" id="7_eow3j"]
@@ -31,9 +30,6 @@ script = ExtResource("2_fc0e3")
 star_count = 100
 random_seed = 2
 star_color = Color(0.803982, 0.974855, 1, 1)
-
-[node name="Planet" parent="." instance=ExtResource("3_feb5d")]
-position = Vector2(382, 149)
 
 [node name="Planet01" parent="." instance=ExtResource("5_7jktm")]
 position = Vector2(1212, 605)
