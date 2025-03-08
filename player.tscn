@@ -1,10 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://fi2ixmc5d567"]
 
 [ext_resource type="Script" uid="uid://dlwtsebnlhrqq" path="res://player.gd" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://bdlau5kpfn0jd" path="res://polygon_2d.gd" id="2_onrkg"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_sh265"]
-radius = 21.0
+[ext_resource type="Script" path="res://player_scan_area.gd" id="2_onrkg"]
 
 [sub_resource type="Gradient" id="Gradient_4ekwm"]
 offsets = PackedFloat32Array(0, 0.718615)
@@ -17,25 +14,41 @@ height = 1024
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_i3pqv"]
+radius = 314.014
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_4flbx")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="MainShape" type="Polygon2D" parent="."]
-position = Vector2(-2.42857, 0)
-scale = Vector2(1.92857, 1.92857)
-color = Color(1, 0.529412, 0, 1)
-polygon = PackedVector2Array(0, -14, 8, -13, 6, -7, 25, 0, -6, 0)
-script = ExtResource("2_onrkg")
-
-[node name="CopiedShape" type="Polygon2D" parent="MainShape"]
-color = Color(0.78738, 0.345611, 5.77569e-07, 1)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(9, 0)
-shape = SubResource("CircleShape2D_sh265")
-
 [node name="PointLight2D" type="PointLight2D" parent="."]
 range_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_onrkg")
+
+[node name="LightSide" type="Polygon2D" parent="."]
+position = Vector2(-2.42857, 0)
+scale = Vector2(1.92857, 1.92857)
+color = Color(1, 0.529412, 0, 1)
+antialiased = true
+polygon = PackedVector2Array(0, -14, 8, -13, 6, -7, 25, 0, -6, 0)
+
+[node name="DarkSide" type="Polygon2D" parent="."]
+position = Vector2(-2.42857, 0)
+scale = Vector2(1.929, -1.929)
+color = Color(0.594966, 0.305046, 0, 1)
+antialiased = true
+polygon = PackedVector2Array(0, -14, 8, -13, 6, -7, 25, 0, -6, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+rotation = -2.03378e-05
+polygon = PackedVector2Array(-14, -0.000284729, -2.99945, -27.0001, 13.0005, -24.9997, 10.0003, -13.9998, 46, 0.000935537, 9.99971, 14.0002, 13.9995, 25.0003, -3.00057, 27.9999)
+
+[node name="PlayerScanArea" type="Area2D" parent="."]
+collision_layer = 2
+script = ExtResource("2_onrkg")
+
+[node name="ScanZone" type="CollisionShape2D" parent="PlayerScanArea"]
+position = Vector2(176, 2)
+shape = SubResource("CircleShape2D_i3pqv")
+debug_color = Color(0.439216, 0.588235, 0.294118, 0.054902)
