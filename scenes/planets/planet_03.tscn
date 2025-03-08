@@ -1,13 +1,13 @@
 [gd_scene load_steps=6 format=3 uid="uid://1akyqn8025ed"]
 
-[ext_resource type="Texture2D" uid="uid://d3x1d6e6xxp2v" path="res://graphics/planets/planet03_diffuse.png" id="1_8nv7p"]
-[ext_resource type="Texture2D" uid="uid://bv1id6ovlfoke" path="res://graphics/planets/planet03_normal.png" id="2_lhype"]
-[ext_resource type="Texture2D" uid="uid://03nc02v0end8" path="res://graphics/planets/planet03_specular.png" id="3_a5apl"]
+[ext_resource type="Texture2D" uid="uid://d3x1d6e6xxp2v" path="res://graphics/planets/planet03_diffuse.png" id="1_fdf47"]
+[ext_resource type="Texture2D" uid="uid://bv1id6ovlfoke" path="res://graphics/planets/planet03_normal.png" id="2_3o84v"]
+[ext_resource type="Texture2D" uid="uid://03nc02v0end8" path="res://graphics/planets/planet03_specular.png" id="3_k64c5"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_6kmws"]
-diffuse_texture = ExtResource("1_8nv7p")
-normal_texture = ExtResource("2_lhype")
-specular_texture = ExtResource("3_a5apl")
+diffuse_texture = ExtResource("1_fdf47")
+normal_texture = ExtResource("2_3o84v")
+specular_texture = ExtResource("3_k64c5")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o42cn"]
 radius = 126.004

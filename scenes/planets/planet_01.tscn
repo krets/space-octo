@@ -1,13 +1,13 @@
 [gd_scene load_steps=6 format=3 uid="uid://y0pdriraaeus"]
 
-[ext_resource type="Texture2D" uid="uid://cjypdtuvff4he" path="res://graphics/planets/planet01_diffuse.png" id="1_xxp4i"]
-[ext_resource type="Texture2D" uid="uid://54ywm6wgx45" path="res://graphics/planets/planet01_normal.png" id="2_6ikmy"]
-[ext_resource type="Texture2D" uid="uid://oe573aq1tof7" path="res://graphics/planets/planet01_specular.png" id="3_230wh"]
+[ext_resource type="Texture2D" uid="uid://cjypdtuvff4he" path="res://graphics/planets/planet01_diffuse.png" id="1_ocpvk"]
+[ext_resource type="Texture2D" uid="uid://54ywm6wgx45" path="res://graphics/planets/planet01_normal.png" id="2_udte1"]
+[ext_resource type="Texture2D" uid="uid://oe573aq1tof7" path="res://graphics/planets/planet01_specular.png" id="3_uxud1"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ig8ig"]
-diffuse_texture = ExtResource("1_xxp4i")
-normal_texture = ExtResource("2_6ikmy")
-specular_texture = ExtResource("3_230wh")
+diffuse_texture = ExtResource("1_ocpvk")
+normal_texture = ExtResource("2_udte1")
+specular_texture = ExtResource("3_uxud1")
 specular_shininess = 0.36
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d1kmi"]

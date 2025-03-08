@@ -1,6 +1,6 @@
 extends Area2D
 
-var highlight_material = preload("res://highlight.gdshader")
+var highlight_material = preload("res://shaders/highlight.gdshader")
 var scannable_objects = [] # All objects in scan area
 var current_selected_object = null
 var current_index = -1

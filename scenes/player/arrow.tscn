@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbp23mn3j8axk"]
+
+[sub_resource type="GDScript" id="GDScript_yob3x"]
+script/source = "extends Node2D
+
+func _process(delta):
+	var viewport = get_viewport()
+	var objects_in_viewport = 0
+
+	for child in get_tree().get_root().get_children():
+		if child == self:
+			continue
+		if viewport.get_visible_rect().has_point(child.global_position):
+			objects_in_viewport += 1
+
+	if objects_in_viewport > 1:
+		self.visible = false
+	else:
+		self.visible = true
+"
+
+[node name="Arrow" type="Node2D"]
+script = SubResource("GDScript_yob3x")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(63, 0)
+scale = Vector2(0.25, 0.25)
+color = Color(1, 1, 0, 1)
+polygon = PackedVector2Array(0, -47, 45, 0, 0, 47)

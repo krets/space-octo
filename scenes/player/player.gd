@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var brake_speed: float = 300
 @export var rotation_speed: float = 5.0
 @export var max_speed: float = 400 
-	
+
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("turn_left"):
 		rotation -= rotation_speed * delta
@@ -21,3 +21,7 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, brake_speed * delta)
 	
 	move_and_slide()
+
+	# Rotate the Arrow towards the world origin, independent of player rotation
+	var direction_to_origin = (Vector2.ZERO - position).normalized()
+	$Arrow.rotation = direction_to_origin.angle() - rotation
