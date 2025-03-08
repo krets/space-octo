@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0pmqk3wlue2h"]
+
+[ext_resource type="Script" uid="uid://dx65yr4uymwy7" path="res://gravity_well.gd" id="1_lm3b4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_af5or"]
+radius = 140.801
+
+[node name="GravityWell" type="Area2D"]
+gravity_space_override = 1
+gravity_point = true
+gravity = -1000.0
+script = ExtResource("1_lm3b4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_af5or")
+debug_color = Color(0.705882, 0.294118, 0.964706, 0.160784)

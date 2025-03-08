@@ -1,29 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnr5kbh01tcuj"]
+[gd_scene load_steps=6 format=3 uid="uid://bnr5kbh01tcuj"]
 
 [ext_resource type="Shader" uid="uid://c48245eavplev" path="res://planet.gdshader" id="1_1odxm"]
+[ext_resource type="Script" path="res://gravity_well.gd" id="2_mtr83"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1odxm"]
-radius = 99.0202
+[sub_resource type="CircleShape2D" id="CircleShape2D_a75xc"]
+radius = 70.0643
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jcv8b"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x6khl"]
 shader = ExtResource("1_1odxm")
 shader_parameter/planet_color = Vector4(0.2, 0.6, 1, 1)
 shader_parameter/noise_scale = 5.0
 shader_parameter/shading_strength = 1.5
 shader_parameter/glow_intensity = 0.4
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_x32po"]
+radius = 276.407
+
 [node name="Planet" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="PlanetBody" type="CharacterBody2D" parent="."]
 motion_mode = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("CircleShape2D_1odxm")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlanetBody"]
+shape = SubResource("CircleShape2D_a75xc")
 
-[node name="ColorRect" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_jcv8b")
+[node name="ColorRect" type="ColorRect" parent="PlanetBody"]
+material = SubResource("ShaderMaterial_x6khl")
 offset_left = -63.0
 offset_top = -63.0
 offset_right = 63.0
 offset_bottom = 63.0
 color = Color(1, 1, 1, 0)
+
+[node name="GravityWell" type="Area2D" parent="PlanetBody"]
+collision_layer = 2
+script = ExtResource("2_mtr83")
+strength = 2e+06
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlanetBody/GravityWell"]
+shape = SubResource("CircleShape2D_x32po")
+debug_color = Color(0.670588, 0.309804, 1, 0.109804)
