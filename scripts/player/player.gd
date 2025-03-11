@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("brake"):
 		velocity = velocity.move_toward(Vector2.ZERO, stats.brake_speed * delta)
 	
-	if Input.is_action_just_pressed("shoot"):
+	if Input.is_action_pressed("shoot"):
 		shoot()
 	
 	healthbar_parent.global_rotation = 0.0

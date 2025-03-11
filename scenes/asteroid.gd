@@ -1,11 +1,10 @@
 extends CharacterBody2D
 
-@export var stats : Resource
+@export var stats : Resource = preload("res://resources/asteroid.tres")
 
-var angular_velocity : float = 2.0  
-var initial_velocity : Vector2 = Vector2(10, 3) 
+var angular_velocity : float = randf_range(-4.0, 4.0)  # Random value between 1.0 and 5.0
+var initial_velocity : Vector2 = Vector2(randf_range(1, 15), randf_range(1, 15)) 
 var bodies : Array = []
-@onready var main = 	get_tree().get_root().get_node("Game")
 
 func _ready() -> void:
 	velocity = initial_velocity
@@ -29,14 +28,13 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body.has_method("clear_damage"):
 		body.clear_damage()
 	bodies.erase(body)
-	if len(bodies) == 0:
+	if len(bodies) == 0 and %Timer:
 		%Timer.stop()
 
 func take_damage(damage : float) -> void:
 	stats.health -= damage
 	if stats.health <= 0:
 		explode()
-
 
 func explode():
 	var debris_scene = preload("res://scenes/debris.tscn")
@@ -49,4 +47,9 @@ func explode():
 		var random_direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
 		debris_instance.position = global_position 
 		debris_instance.initial_velocity  = random_direction * explosion_velocity
-		main.add_child(debris_instance)
+		get_parent().add_child(debris_instance)
+
+func _on_death_timer_timeout() -> void:
+	var rect = get_viewport_rect()
+	if not rect.has_point(global_position):
+		explode()

@@ -24,7 +24,7 @@ color = Color(1, 0, 1, 1)
 polygon = PackedVector2Array(-8, -2, 0, -5, 7, -4, 10, 0, 7, 4, 0, 5, -8, 2)
 
 [node name="Lifetime" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 5.0
 one_shot = true
 
 [node name="Area2D" type="Area2D" parent="."]

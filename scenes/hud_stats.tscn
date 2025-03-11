@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://cha7k347d2gt3"]
+
+[ext_resource type="Script" uid="uid://b3raw25ajwxky" path="res://scenes/hud_stats.gd" id="1_73vpq"]
+
+[node name="HudStats" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_73vpq")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 2
+
+[node name="PosLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Position"
+
+[node name="PosValue" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "0,0"
+
+[node name="ScoreLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "Score"
+
+[node name="ScoreValue" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "0"
