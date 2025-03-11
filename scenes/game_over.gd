@@ -1,5 +1,10 @@
 extends CanvasLayer
 
+func _ready():
+	var size = get_viewport().size
+	$ColorRect.size = size
+	$CenterContainer.size = size
+
 func _on_button_pressed() -> void:
 	get_tree().paused = false
 	print("Restarting?")
