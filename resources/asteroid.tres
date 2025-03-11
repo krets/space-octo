@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Destroyable" load_steps=2 format=3 uid="uid://cmxp7mrjjh7aw"]
+
+[ext_resource type="Script" uid="uid://b6ecjna11xnii" path="res://scripts/destroyable.gd" id="1_ei7q5"]
+
+[resource]
+script = ExtResource("1_ei7q5")
+max_health = 100.0
+health = null
+metadata/_custom_type_script = "uid://b6ecjna11xnii"
