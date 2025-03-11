@@ -8,12 +8,8 @@ func _ready() -> void:
 	$CanvasLayer/ColorRect.size = size
 	# $CanvasLayer/Starfield.size = size
 
-
-func reset_timer():
-	$AsteroidSpawner.wait_time = randf_range(1.0, asteroid_timer_max)
-
-
 func _on_asteroid_spawner_timeout() -> void:
+	$AsteroidSpawner.wait_time = randf_range(1.0, asteroid_timer_max)
 	if $Asteroids.get_child_count() >= max_asteroids:
 		$Asteroids.get_child(0).explode()
 

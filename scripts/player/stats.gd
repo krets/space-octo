@@ -9,3 +9,7 @@ class_name PlayerStats
 @export var health : float = max_health
 @export var weapon_cooldown : float = 1.0
 @export var weapon_damage : float = 1.0
+
+@export var points_blue : int = 0
+@export var points_orange : int = 0
+@export var points_yellow : int = 0

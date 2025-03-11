@@ -19,6 +19,8 @@ func _on_lifetime_timeout() -> void:
 radius = 4.0
 
 [node name="Debris" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
 script = SubResource("GDScript_ohb82")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]

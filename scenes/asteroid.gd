@@ -34,7 +34,15 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 func take_damage(damage : float) -> void:
 	stats.health -= damage
 	if stats.health <= 0:
+		spawn_pickups()
 		explode()
+		
+func spawn_pickups():
+	print("Creating Pickup")
+	var pickup_scene = preload("res://scenes/pickup.tscn")
+	var instance = pickup_scene.instantiate()
+	instance.global_position = global_position
+	get_parent().add_child(instance)
 
 func explode():
 	var debris_scene = preload("res://scenes/debris.tscn")

@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cha7k347d2gt3"]
+[gd_scene load_steps=3 format=3 uid="uid://cha7k347d2gt3"]
 
 [ext_resource type="Script" uid="uid://b3raw25ajwxky" path="res://scenes/hud_stats.gd" id="1_73vpq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_73vpq"]
+font_color = Color(0.832474, 0.832474, 0.832474, 1)
 
 [node name="HudStats" type="Control"]
 layout_mode = 3
@@ -13,22 +16,41 @@ script = ExtResource("1_73vpq")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 54.0
+offset_bottom = 43.0
 columns = 2
 
 [node name="PosLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
-text = "Position"
+text = "X,Y"
+label_settings = SubResource("LabelSettings_73vpq")
 
 [node name="PosValue" type="Label" parent="GridContainer"]
 layout_mode = 2
 text = "0,0"
 
-[node name="ScoreLabel" type="Label" parent="GridContainer"]
+[node name="OrangeLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
-text = "Score"
+text = "▇"
 
-[node name="ScoreValue" type="Label" parent="GridContainer"]
+[node name="OrangeValue" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="YellowLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "▇"
+
+[node name="YellowValue" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="BlueLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+text = "▇"
+
+[node name="BlueValue" type="Label" parent="GridContainer"]
 layout_mode = 2
 text = "0"

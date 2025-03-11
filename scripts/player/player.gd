@@ -7,7 +7,7 @@ extends CharacterBody2D
 @onready var projectile = preload("res://scenes/projectile.tscn")
 @onready var default_modulate = $Polygon2D.modulate
 @onready var main = 	get_tree().get_root().get_node("Game")
-
+@onready var color_names = ColorNames.new()
 func _ready() -> void:
 	
 	if not stats:
@@ -37,6 +37,17 @@ func _physics_process(delta: float) -> void:
 	healthbar_parent.global_rotation = 0.0
 	healthbar.rotation = 0 
 	move_and_slide()
+
+
+func do_pickup(color: Color) -> void:
+	if color == color_names.orange:
+		stats.points_orange += 1
+	elif color == color_names.yellow:
+		stats.points_yellow += 1
+	elif color == color_names.blue:
+		stats.points_blue += 1
+	else:
+		print("Unknown pickup: %s" % color)
 
 
 func take_damage(damage : float) -> void:
