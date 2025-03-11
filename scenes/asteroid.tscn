@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://unanq7oxhbih"]
+
+[ext_resource type="Script" uid="uid://cj21gb5qrxbm5" path="res://scenes/asteroid.gd" id="1_akfqu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6mo6b"]
+radius = 22.0907
+
+[sub_resource type="GDScript" id="GDScript_akfqu"]
+script/source = "extends Area2D
+
+func _on_body_entered(body: Node) -> void:
+	print(\"Entered Damage Area: \" + str(body))
+	if body.has_method(\"take_damage\"):
+		body.take_damage(2.0)
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_akfqu"]
+radius = 56.0
+
+[node name="Asteroid" type="CharacterBody2D"]
+script = ExtResource("1_akfqu")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-14, -18, 5, -21, 18, -12, 22, 2, 13, 19, -4, 22, -10, 17, -15, 16, -20, 8, -21, -7)
+
+[node name="Bounce" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6mo6b")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = SubResource("GDScript_akfqu")
+
+[node name="Damage" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_akfqu")
+debug_color = Color(0.580392, 0, 0.188235, 0.34902)
+
+[node name="Timer" type="Timer" parent="Area2D/Damage"]
+unique_name_in_owner = true
+wait_time = 0.2
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Area2D/Damage/Timer" to="." method="_on_timer_timeout"]
