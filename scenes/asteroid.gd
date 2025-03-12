@@ -27,8 +27,6 @@ func _on_timer_timeout() -> void:
 			body.take_damage(hit_damage)
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
-	if body.has_method("clear_damage"):
-		body.clear_damage()
 	bodies.erase(body)
 	if len(bodies) == 0 and %Timer:
 		%Timer.stop()

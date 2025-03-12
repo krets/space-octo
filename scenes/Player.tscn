@@ -11,7 +11,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Polygon2D:modulate")
+tracks/0/path = NodePath("ShipPolygon:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -24,17 +24,17 @@ tracks/0/keys = {
 [sub_resource type="Animation" id="Animation_v6fml"]
 resource_name = "damage_taken"
 length = 0.2
-loop_mode = 1
+loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Polygon2D:modulate")
+tracks/0/path = NodePath("ShipPolygon:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
+"update": 1,
 "values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 
@@ -43,7 +43,7 @@ resource_name = "idle"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Polygon2D:modulate")
+tracks/0/path = NodePath("ShipPolygon:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -68,16 +68,20 @@ stats = ExtResource("2_v6fml")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_v6fml")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
+[node name="ShipPolygon" type="Polygon2D" parent="."]
 position = Vector2(-2, 0)
 polygon = PackedVector2Array(-7, -9, 13, 0, -7, 9, -5, 0)
 
-[node name="DamageAnimation" type="AnimationPlayer" parent="Polygon2D"]
+[node name="DamageAnimation" type="AnimationPlayer" parent="ShipPolygon"]
 unique_name_in_owner = true
 root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_mdl7e")
 }
+
+[node name="DamageAnimTimer" type="Timer" parent="ShipPolygon"]
+wait_time = 0.5
+one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -93,3 +97,5 @@ scale = Vector2(0.5868, 0.5868)
 
 [node name="WeaponCooldown" type="Timer" parent="."]
 one_shot = true
+
+[connection signal="timeout" from="ShipPolygon/DamageAnimTimer" to="." method="_on_damage_anim_timer_timeout"]

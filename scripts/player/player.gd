@@ -5,7 +5,7 @@ extends CharacterBody2D
 @onready var healthbar_parent = $HealthBarParent
 @onready var healthbar = $HealthBarParent/HealthBar
 @onready var projectile = preload("res://scenes/projectile.tscn")
-@onready var default_modulate = $Polygon2D.modulate
+@onready var default_modulate = $ShipPolygon.modulate
 @onready var main = 	get_tree().get_root().get_node("Game")
 @onready var color_names = ColorNames.new()
 func _ready() -> void:
@@ -58,10 +58,11 @@ func take_damage(damage : float) -> void:
 		print("You dead now.")
 		get_tree().change_scene_to_file("res://scenes/game_over.tscn")
 	%DamageAnimation.play("damage_taken")
+	$ShipPolygon/DamageAnimTimer.start()
 
 func clear_damage():
 	%DamageAnimation.stop()
-	$Polygon2D.modulate = default_modulate
+	$ShipPolygon.modulate = default_modulate
 
 func shoot():
 	if not $WeaponCooldown.is_stopped():
@@ -76,3 +77,7 @@ func shoot():
 	instance.spawn_rotation = global_rotation
 	instance.damage = stats.weapon_damage
 	main.add_child(instance)
+
+
+func _on_damage_anim_timer_timeout() -> void:
+	clear_damage()

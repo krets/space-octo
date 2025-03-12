@@ -1,6 +1,5 @@
 ## ToDo
 
- - Player damage animation remains if asteroid destroyed during damage (no exit)
  - Pickups spawned into Asteroids group
  - smarter despawn of asteroids
    - explosion of first item in Asteroids list is too simple; may be on screen or near screen
