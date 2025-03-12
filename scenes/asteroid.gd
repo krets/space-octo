@@ -3,8 +3,10 @@ extends CharacterBody2D
 @export var stats : Resource = preload("res://resources/asteroid.tres")
 
 var angular_velocity : float = randf_range(-4.0, 4.0)  # Random value between 1.0 and 5.0
-var initial_velocity : Vector2 = Vector2(randf_range(1, 15), randf_range(1, 15)) 
+var initial_velocity : Vector2 = Vector2(randf_range(1, 200), randf_range(1, 200)) 
 var bodies : Array = []
+
+var hit_damage : float = 10.0
 
 func _ready() -> void:
 	velocity = initial_velocity
@@ -22,7 +24,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 func _on_timer_timeout() -> void:
 	for body in bodies:
 		if body.has_method("take_damage"):
-			body.take_damage(2.0)
+			body.take_damage(hit_damage)
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body.has_method("clear_damage"):
@@ -38,7 +40,6 @@ func take_damage(damage : float) -> void:
 		explode()
 		
 func spawn_pickups():
-	print("Creating Pickup")
 	var pickup_scene = preload("res://scenes/pickup.tscn")
 	var instance = pickup_scene.instantiate()
 	instance.global_position = global_position
@@ -47,7 +48,7 @@ func spawn_pickups():
 func explode():
 	var debris_scene = preload("res://scenes/debris.tscn")
 	var number_of_debris = 10
-	var explosion_velocity = 1000.0  # Adjust as needed
+	var explosion_velocity = 1200
 	queue_free()
 
 	for i in range(number_of_debris):
