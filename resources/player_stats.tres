@@ -4,12 +4,15 @@
 
 [resource]
 script = ExtResource("1_wld0n")
-thrust_speed = 100.0
-brake_speed = 50.0
-turn_rate = 5.0
-max_speed = 600.0
+thrust_speed = 400.0
+brake_speed = 200.0
+turn_rate = 3.0
+max_speed = 800.0
 max_health = 100.0
 health = null
 weapon_cooldown = 0.1
 weapon_damage = 25.0
+points_blue = 0
+points_orange = 0
+points_yellow = 0
 metadata/_custom_type_script = "uid://dqg6byqevrilj"
