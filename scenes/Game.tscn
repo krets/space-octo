@@ -2,12 +2,14 @@
 
 [ext_resource type="Script" uid="uid://1sg3fatw1k6i" path="res://scripts/game.gd" id="1_78awf"]
 [ext_resource type="PackedScene" uid="uid://cwuun8ra6ut7b" path="res://scenes/starfield.tscn" id="1_cpr0p"]
-[ext_resource type="PackedScene" uid="uid://unanq7oxhbih" path="res://scenes/asteroid.tscn" id="1_qbsmt"]
 [ext_resource type="PackedScene" uid="uid://dqo5pdkg21lrv" path="res://scenes/Player.tscn" id="2_cpr0p"]
 [ext_resource type="PackedScene" uid="uid://cha7k347d2gt3" path="res://scenes/hud_stats.tscn" id="3_s0nni"]
+[ext_resource type="PackedScene" uid="uid://craxkns3tugl7" path="res://scenes/pickup.tscn" id="5_s0nni"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_78awf")
+asteroid_timer_max = 5.0
+max_asteroids = 150
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -33,13 +35,201 @@ unique_name_in_owner = true
 z_index = 1
 position = Vector2(973, 551)
 
-[node name="Asteroid" parent="." instance=ExtResource("1_qbsmt")]
-position = Vector2(41, 131)
-initial_velocity = Vector2(100, 0)
-
 [node name="AsteroidSpawner" type="Timer" parent="."]
 autostart = true
 
 [node name="Asteroids" type="Node2D" parent="."]
+
+[node name="Pickup" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1079, 562)
+
+[node name="Pickup2" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1176, 561)
+
+[node name="Pickup3" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1124, 522)
+
+[node name="Pickup4" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1126, 620)
+
+[node name="Pickup5" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1036, 628)
+
+[node name="Pickup6" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1062, 506)
+
+[node name="Pickup7" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1124, 577)
+
+[node name="Pickup8" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1186, 631)
+
+[node name="Pickup9" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1303, 562)
+
+[node name="Pickup10" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1400, 561)
+
+[node name="Pickup11" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1348, 522)
+
+[node name="Pickup12" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1350, 620)
+
+[node name="Pickup13" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1260, 628)
+
+[node name="Pickup14" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1286, 506)
+
+[node name="Pickup15" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1348, 577)
+
+[node name="Pickup16" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1410, 631)
+
+[node name="Pickup17" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1303, 740)
+
+[node name="Pickup18" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1400, 739)
+
+[node name="Pickup19" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1348, 700)
+
+[node name="Pickup20" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1350, 798)
+
+[node name="Pickup21" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1260, 806)
+
+[node name="Pickup22" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1286, 684)
+
+[node name="Pickup23" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1348, 755)
+
+[node name="Pickup24" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1410, 809)
+
+[node name="Pickup25" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1083, 754)
+
+[node name="Pickup26" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1180, 753)
+
+[node name="Pickup27" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1128, 714)
+
+[node name="Pickup28" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1130, 812)
+
+[node name="Pickup29" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1040, 820)
+
+[node name="Pickup30" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1066, 698)
+
+[node name="Pickup31" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1128, 769)
+
+[node name="Pickup32" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1190, 823)
+
+[node name="Pickup33" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1526, 562)
+
+[node name="Pickup34" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1623, 561)
+
+[node name="Pickup35" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1571, 522)
+
+[node name="Pickup36" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1573, 620)
+
+[node name="Pickup37" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1483, 628)
+
+[node name="Pickup38" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1509, 506)
+
+[node name="Pickup39" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1571, 577)
+
+[node name="Pickup40" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1633, 631)
+
+[node name="Pickup41" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1750, 562)
+
+[node name="Pickup42" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1847, 561)
+
+[node name="Pickup43" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1795, 522)
+
+[node name="Pickup44" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1797, 620)
+
+[node name="Pickup45" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1707, 628)
+
+[node name="Pickup46" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1733, 506)
+
+[node name="Pickup47" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1795, 577)
+
+[node name="Pickup48" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1857, 631)
+
+[node name="Pickup49" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1750, 740)
+
+[node name="Pickup50" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1847, 739)
+
+[node name="Pickup51" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1795, 700)
+
+[node name="Pickup52" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1797, 798)
+
+[node name="Pickup53" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1707, 806)
+
+[node name="Pickup54" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1733, 684)
+
+[node name="Pickup55" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1795, 755)
+
+[node name="Pickup56" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1857, 809)
+
+[node name="Pickup57" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1530, 754)
+
+[node name="Pickup58" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1627, 753)
+
+[node name="Pickup59" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1575, 714)
+
+[node name="Pickup60" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1577, 812)
+
+[node name="Pickup61" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1487, 820)
+
+[node name="Pickup62" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1513, 698)
+
+[node name="Pickup63" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1575, 769)
+
+[node name="Pickup64" parent="." instance=ExtResource("5_s0nni")]
+position = Vector2(1637, 823)
 
 [connection signal="timeout" from="AsteroidSpawner" to="." method="_on_asteroid_spawner_timeout"]

@@ -1,24 +1,24 @@
 extends Control
 
 var player
-@onready var colors = ColorNames.new()
+#@onready var colors = ColorNames.new()
+@onready var palette : Resource = preload("res://resources/color_palette.tres")
+
+var stat_labels = {}
 
 func _ready() -> void:
 	player = %Player
-	#var pickup = preload("res://scenes/pickup.tscn")
-	#for color in colors.all_colors:
-		##var label = PanelContainer.new()
-		#var instance = pickup.instantiate()
-		#instance.modulate = color
-		##label.add_child(instance)
-		#$GridContainer.add_child(instance)
-		#var value = Label.new()
-		#value.text = "0"
-		#$GridContainer.add_child(Label.new())
-	$GridContainer/OrangeLabel["theme_override_colors/font_color"] = colors.orange
-	$GridContainer/YellowLabel["theme_override_colors/font_color"] = colors.yellow
-	$GridContainer/BlueLabel["theme_override_colors/font_color"] = colors.blue
-
+	
+	for stat_name in PickupStats.stat_names.keys():
+		var label = Label.new()
+		label.text = "▇ %s" % stat_name
+		label["theme_override_colors/font_color"] = PickupStats.get_color(stat_name)
+		
+		var value_label = Label.new()
+		$GridContainer.add_child(label)
+		$GridContainer.add_child(value_label)
+		
+		stat_labels[stat_name] = value_label
 
 func _process(delta: float) -> void:
 	var x_pos = 0
@@ -29,10 +29,9 @@ func _process(delta: float) -> void:
 	if player:
 		x_pos = int(player.global_position.x / 100)
 		y_pos = int(player.global_position.y / 100)
-		points_orange = player.stats.points_orange
-		points_blue = player.stats.points_blue
-		points_yellow = player.stats.points_yellow
+
 	$GridContainer/PosValue.text = "(%s, %s)" % [x_pos, y_pos]
-	$GridContainer/OrangeValue.text = str(points_orange)
-	$GridContainer/BlueValue.text = str(points_blue)
-	$GridContainer/YellowValue.text = str(points_yellow)
+
+	for stat_name in PickupStats.stat_names:
+		if stat_labels.has(stat_name):
+			stat_labels[stat_name].text = str(player.stats.get(stat_name))

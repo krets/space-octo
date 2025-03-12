@@ -30,27 +30,3 @@ label_settings = SubResource("LabelSettings_73vpq")
 [node name="PosValue" type="Label" parent="GridContainer"]
 layout_mode = 2
 text = "0,0"
-
-[node name="OrangeLabel" type="Label" parent="GridContainer"]
-layout_mode = 2
-text = "▇"
-
-[node name="OrangeValue" type="Label" parent="GridContainer"]
-layout_mode = 2
-text = "0"
-
-[node name="YellowLabel" type="Label" parent="GridContainer"]
-layout_mode = 2
-text = "▇"
-
-[node name="YellowValue" type="Label" parent="GridContainer"]
-layout_mode = 2
-text = "0"
-
-[node name="BlueLabel" type="Label" parent="GridContainer"]
-layout_mode = 2
-text = "▇"
-
-[node name="BlueValue" type="Label" parent="GridContainer"]
-layout_mode = 2
-text = "0"

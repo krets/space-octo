@@ -1,12 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://dqo5pdkg21lrv"]
+[gd_scene load_steps=12 format=3 uid="uid://dqo5pdkg21lrv"]
 
 [ext_resource type="Script" uid="uid://c5maxheqlon8c" path="res://scripts/player/player.gd" id="1_p0vlq"]
 [ext_resource type="Resource" uid="uid://bpgbonsjy52o3" path="res://resources/player_stats.tres" id="2_v6fml"]
-[ext_resource type="PackedScene" uid="uid://cq5pmjabpw6gp" path="res://scenes/health_bar.tscn" id="3_3li8b"]
 [ext_resource type="PackedScene" uid="uid://ccgnwek2up0kc" path="res://scenes/movement_trail.tscn" id="3_qu4a1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v6fml"]
-radius = 14.0
+radius = 32.0
+
+[sub_resource type="Gradient" id="Gradient_3li8b"]
+offsets = PackedFloat32Array(0, 0.456044, 0.651884, 0.659341)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mdl7e"]
+gradient = SubResource("Gradient_3li8b")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="Animation" id="Animation_3li8b"]
 length = 0.001
@@ -21,6 +29,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShipPolygon:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.7, 1.77778)]
 }
 
 [sub_resource type="Animation" id="Animation_v6fml"]
@@ -38,6 +58,33 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qu4a1"]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShipPolygon:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShipPolygon:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.7, 1.77778), Vector2(4.781, 5)]
 }
 
 [sub_resource type="Animation" id="Animation_mdl7e"]
@@ -59,6 +106,7 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_3li8b"),
 &"damage_taken": SubResource("Animation_v6fml"),
+&"death": SubResource("Animation_qu4a1"),
 &"idle": SubResource("Animation_mdl7e")
 }
 
@@ -68,8 +116,26 @@ script = ExtResource("1_p0vlq")
 stats = ExtResource("2_v6fml")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(4, 0)
 shape = SubResource("CircleShape2D_v6fml")
+
+[node name="ShieldDisplay" type="Node2D" parent="CollisionShape2D"]
+
+[node name="TextureRect" type="TextureRect" parent="CollisionShape2D/ShieldDisplay"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_mdl7e")
+expand_mode = 2
 
 [node name="ShipPolygon" type="Polygon2D" parent="."]
 position = Vector2(4.76837e-07, -2.38419e-07)
@@ -94,16 +160,6 @@ points = PackedVector2Array(-64, 0, 3.19, 0)
 width = 15.03
 
 [node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="HealthBarParent" type="Node2D" parent="."]
-
-[node name="HealthBar" parent="HealthBarParent" instance=ExtResource("3_3li8b")]
-auto_translate_mode = 2
-offset_left = -14.0
-offset_top = 20.0
-offset_right = 36.0
-offset_bottom = 24.0
-scale = Vector2(0.5868, 0.5868)
 
 [node name="WeaponCooldown" type="Timer" parent="."]
 one_shot = true

@@ -11,3 +11,5 @@ static var all_colors : Array[Color] = [orange, yellow, blue]
 
 func get_color():
 	return all_colors[randi() % all_colors.size()]
+
+var foo : ColorPalette = ColorPalette.new()

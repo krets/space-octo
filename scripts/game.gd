@@ -7,12 +7,27 @@ func _ready() -> void:
 	var size = get_viewport().size
 	$CanvasLayer/ColorRect.size = size
 	# $CanvasLayer/Starfield.size = size
+	print(ColorPalette.new().colors)
+	
 
 func _on_asteroid_spawner_timeout() -> void:
 	$AsteroidSpawner.wait_time = randf_range(1.0, asteroid_timer_max)
 	if $Asteroids.get_child_count() >= max_asteroids:
-		$Asteroids.get_child(0).explode()
-
+		var player_position = %Player.global_position
+		var furthest_asteroid = null
+		var max_distance = -1.0
+		
+		# Find the furthest asteroid
+		for asteroid in $Asteroids.get_children():
+			var distance = asteroid.global_position.distance_to(player_position)
+			if distance > max_distance:
+				max_distance = distance
+				furthest_asteroid = asteroid
+		
+		# De-spawn the furthest asteroid
+		if furthest_asteroid:
+			furthest_asteroid.explode()
+	
 	var asteroid = preload("res://scenes/asteroid.tscn")
 	var instance = asteroid.instantiate()
 	var viewport_size = get_viewport().size

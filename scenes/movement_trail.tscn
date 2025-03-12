@@ -8,7 +8,7 @@ point_count = 4
 
 [sub_resource type="Gradient" id="Gradient_p8erx"]
 offsets = PackedFloat32Array(0.14759, 1)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.67451)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.501961)
 
 [node name="MovementTrail" type="Line2D"]
 top_level = true
