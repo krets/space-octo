@@ -82,6 +82,7 @@ func shoot():
 	instance.spawn_position = global_position
 	instance.spawn_rotation = global_rotation
 	instance.damage = stats.weapon_damage
+	instance.velocity = velocity
 	main.add_child(instance)
 
 

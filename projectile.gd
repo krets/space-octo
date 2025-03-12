@@ -15,7 +15,7 @@ func _ready() -> void:
 	$Lifetime.start()
 	
 func _physics_process(delta: float) -> void:
-	velocity = Vector2(0, -speed).rotated(dir)
+	velocity += Vector2(0, - speed).rotated(dir)
 	move_and_slide()
 
 func _on_lifetime_timeout() -> void:
