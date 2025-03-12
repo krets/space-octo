@@ -1,15 +1,13 @@
-extends Node2D
+class_name MovementTrail
+extends Line2D
 
-@onready var parent = get_parent()
-@export var trail_scale : float = 0.001
+const MAX_POINTS : int = 50
+@onready var curve := Curve2D.new()
 
-func _ready() -> void:
-	scale.x = 1.0
 
 func _process(delta: float) -> void:
-	var velocity = parent.velocity
-	var trail_x_size = velocity.length() * trail_scale
-	scale.x = trail_x_size
-	
-	if velocity.length() > 0:
-		look_at(global_position + velocity)
+	print("curve point: %s" % get_parent().position)
+	curve.add_point(get_parent().position)
+	if curve.get_baked_points().size() > MAX_POINTS:
+		curve.remove_point(0)
+	points = curve.get_baked_points()

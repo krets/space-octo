@@ -2,18 +2,21 @@
 
 [ext_resource type="Script" uid="uid://dn0cbsaw7i0nn" path="res://scenes/movement_trail.gd" id="1_im635"]
 
-[sub_resource type="Gradient" id="Gradient_u1t1s"]
-colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+[sub_resource type="Curve" id="Curve_im635"]
+_data = [Vector2(0, 0.730754), 0.0, 0.0, 0, 0, Vector2(0.956098, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 0.824736), 0.0, 0.0, 0, 0, Vector2(1, 0.837436), -3.66168, 0.0, 0, 0]
+point_count = 4
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_im635"]
-gradient = SubResource("Gradient_u1t1s")
+[sub_resource type="Gradient" id="Gradient_p8erx"]
+offsets = PackedFloat32Array(0.14759, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.67451)
 
-[node name="MovementTrail" type="Node2D"]
+[node name="MovementTrail" type="Line2D"]
+top_level = true
+points = PackedVector2Array(-64, 0, -8, 0, 0, 0)
+width_curve = SubResource("Curve_im635")
+gradient = SubResource("Gradient_p8erx")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
 script = ExtResource("1_im635")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-offset_left = -40.0
-offset_top = -18.0
-offset_bottom = 22.0
-texture = SubResource("GradientTexture1D_im635")
-expand_mode = 2

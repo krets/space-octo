@@ -8,6 +8,10 @@ extends CharacterBody2D
 @onready var default_modulate = $ShipPolygon.modulate
 @onready var main = 	get_tree().get_root().get_node("Game")
 @onready var color_names = ColorNames.new()
+var trail_color : Color = Color(1,1,1,0.6)
+
+var current_trail : MovementTrail
+
 func _ready() -> void:
 	
 	if not stats:
@@ -25,8 +29,10 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("thrust"):
 		var thrust = Vector2(cos(rotation), sin(rotation)) * stats.thrust_speed
 		velocity += thrust * delta
-		
+		$MovementTrail.modulate = ColorNames.orange
 		velocity = velocity.limit_length(stats.max_speed)
+	else:
+		$MovementTrail.modulate = trail_color
 	
 	if Input.is_action_pressed("brake"):
 		velocity = velocity.move_toward(Vector2.ZERO, stats.brake_speed * delta)
@@ -81,3 +87,5 @@ func shoot():
 
 func _on_damage_anim_timer_timeout() -> void:
 	clear_damage()
+
+		
