@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqo5pdkg21lrv"]
+[gd_scene load_steps=11 format=3 uid="uid://dqo5pdkg21lrv"]
 
 [ext_resource type="Script" uid="uid://c5maxheqlon8c" path="res://scripts/player/player.gd" id="1_p0vlq"]
 [ext_resource type="Resource" uid="uid://bpgbonsjy52o3" path="res://resources/player_stats.tres" id="2_v6fml"]
 [ext_resource type="PackedScene" uid="uid://cq5pmjabpw6gp" path="res://scenes/health_bar.tscn" id="3_3li8b"]
+[ext_resource type="PackedScene" uid="uid://ccgnwek2up0kc" path="res://scenes/movement_trail.tscn" id="3_qu4a1"]
+[ext_resource type="Script" uid="uid://dn0cbsaw7i0nn" path="res://scenes/movement_trail.gd" id="4_70d11"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v6fml"]
 
@@ -82,6 +84,13 @@ libraries = {
 [node name="DamageAnimTimer" type="Timer" parent="ShipPolygon"]
 wait_time = 0.5
 one_shot = true
+
+[node name="MovementTrail" parent="." instance=ExtResource("3_qu4a1")]
+modulate = Color(1, 0.533333, 0, 1)
+z_index = -1
+position = Vector2(-6, -1)
+scale = Vector2(1, 0.320004)
+script = ExtResource("4_70d11")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

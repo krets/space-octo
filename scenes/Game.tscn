@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://fl2kqgotehqv"]
+[gd_scene load_steps=6 format=3 uid="uid://fl2kqgotehqv"]
 
 [ext_resource type="Script" uid="uid://1sg3fatw1k6i" path="res://scripts/game.gd" id="1_78awf"]
 [ext_resource type="PackedScene" uid="uid://cwuun8ra6ut7b" path="res://scenes/starfield.tscn" id="1_cpr0p"]
+[ext_resource type="PackedScene" uid="uid://unanq7oxhbih" path="res://scenes/asteroid.tscn" id="1_qbsmt"]
 [ext_resource type="PackedScene" uid="uid://dqo5pdkg21lrv" path="res://scenes/Player.tscn" id="2_cpr0p"]
 [ext_resource type="PackedScene" uid="uid://cha7k347d2gt3" path="res://scenes/hud_stats.tscn" id="3_s0nni"]
 
@@ -31,6 +32,10 @@ star_count = 200
 unique_name_in_owner = true
 z_index = 1
 position = Vector2(973, 551)
+
+[node name="Asteroid" parent="." instance=ExtResource("1_qbsmt")]
+position = Vector2(41, 131)
+initial_velocity = Vector2(100, 0)
 
 [node name="AsteroidSpawner" type="Timer" parent="."]
 autostart = true

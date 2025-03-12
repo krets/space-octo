@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
 @export var stats : Resource = preload("res://resources/asteroid.tres")
+@export var angular_velocity : float = randf_range(-4.0, 4.0)  # Random value between 1.0 and 5.0
+@export var initial_velocity : Vector2 = Vector2(randf_range(1, 200), randf_range(1, 200)) 
 
-var angular_velocity : float = randf_range(-4.0, 4.0)  # Random value between 1.0 and 5.0
-var initial_velocity : Vector2 = Vector2(randf_range(1, 200), randf_range(1, 200)) 
 var bodies : Array = []
 
 var hit_damage : float = 10.0

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccgnwek2up0kc"]
+
+[ext_resource type="Script" uid="uid://dn0cbsaw7i0nn" path="res://scenes/movement_trail.gd" id="1_im635"]
+
+[sub_resource type="Gradient" id="Gradient_u1t1s"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_im635"]
+gradient = SubResource("Gradient_u1t1s")
+
+[node name="MovementTrail" type="Node2D"]
+script = ExtResource("1_im635")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -40.0
+offset_top = -18.0
+offset_bottom = 22.0
+texture = SubResource("GradientTexture1D_im635")
+expand_mode = 2
