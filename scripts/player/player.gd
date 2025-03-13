@@ -54,30 +54,18 @@ func draw_shield() -> void:
 		$CollisionShape2D.shape.radius = stats.shield_size_min
 		var shield_color = Color(PickupStats.get_color("health"))
 		
-		var max_threshold = stats.shield_grow_threshold - stats.shield_display_min
-		var current_value = stats.health - stats.shield_display_min
-		var alpha = current_value / max_threshold
+		var alpha = inverse_lerp(stats.shield_display_min, stats.shield_grow_threshold, stats.health)
 		shield_color.a = alpha
 		display.scale.x = 1.0 
 		display.scale.y = 1.0
 		$CollisionShape2D/ShieldDisplay.modulate = shield_color
 	else:
-		var denominator = (stats.max_health - stats.shield_grow_threshold)
-		if denominator != 0:
-			var grow_factor = (stats.health - stats.shield_grow_threshold) / denominator
-			var shield_size = grow_factor * (stats.shield_grow_size - stats.shield_size_min) + stats.shield_size_min
-			print("Growing shield %s : %s" % [grow_factor, shield_size])
-			$CollisionShape2D.shape.radius = shield_size/2
-			display.scale.x = 1.0 + grow_factor
-			display.scale.y = 1.0 + grow_factor
-		else:
-			print("Warning: Denominator is zero!")
-			print("Initial values:")
-			print("max_health: ", stats.max_health)
-			print("health: ", stats.health)
-			print("shield_grow_threshold: ", stats.shield_grow_threshold)
-			print("shield_grow_size: ", stats.shield_grow_size)
-			print("shield_size_min: ", stats.shield_size_min)
+		var grow_factor = inverse_lerp(stats.shield_grow_threshold, stats.max_health, stats.health)
+		var shield_size = lerp(stats.shield_size_min, stats.shield_grow_size, grow_factor)
+		print("Growing shield %s : %s" % [grow_factor, shield_size])
+		$CollisionShape2D.shape.radius = shield_size / 2
+		display.scale.x = 1.0 + grow_factor
+		display.scale.y = 1.0 + grow_factor
 
 func do_pickup(stat_name: String, value: float) -> void:
 	var new_value = value + stats.get(stat_name)
