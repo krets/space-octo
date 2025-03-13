@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://unanq7oxhbih"]
 
-[ext_resource type="Script" uid="uid://cj21gb5qrxbm5" path="res://scenes/asteroid.gd" id="1_akfqu"]
+[ext_resource type="Script" uid="uid://cj21gb5qrxbm5" path="res://scripts/asteroid.gd" id="1_akfqu"]
 [ext_resource type="PackedScene" uid="uid://ccgnwek2up0kc" path="res://scenes/movement_trail.tscn" id="2_6mo6b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6mo6b"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cha7k347d2gt3"]
 
-[ext_resource type="Script" uid="uid://b3raw25ajwxky" path="res://scenes/hud_stats.gd" id="1_73vpq"]
+[ext_resource type="Script" uid="uid://b3raw25ajwxky" path="res://scripts/hud_stats.gd" id="1_73vpq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_73vpq"]
 font_color = Color(0.832474, 0.832474, 0.832474, 1)

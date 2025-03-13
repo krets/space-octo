@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ccgnwek2up0kc"]
 
-[ext_resource type="Script" uid="uid://dn0cbsaw7i0nn" path="res://scenes/movement_trail.gd" id="1_im635"]
+[ext_resource type="Script" uid="uid://dn0cbsaw7i0nn" path="res://scripts/movement_trail.gd" id="1_im635"]
 
 [sub_resource type="Curve" id="Curve_im635"]
 _data = [Vector2(0, 0.730754), 0.0, 0.0, 0, 0, Vector2(0.956098, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 0.824736), 0.0, 0.0, 0, 0, Vector2(1, 0.837436), -3.66168, 0.0, 0, 0]
