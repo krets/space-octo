@@ -30,8 +30,11 @@ func _on_asteroid_spawner_timeout() -> void:
 		if furthest_asteroid:
 			furthest_asteroid.explode()
 	
-	var asteroid = preload("res://scenes/asteroid.tscn")
-	var instance = asteroid.instantiate()
+	var asteroid_scene = preload("res://scenes/asteroid.tscn")
+	var asteroid = asteroid_scene.instantiate()
+	asteroid.visible = false
+	asteroid.process_mode = Node.PROCESS_MODE_DISABLED	
+
 	var viewport_size = get_viewport().size
 	var padding = 100
 	
@@ -55,6 +58,9 @@ func _on_asteroid_spawner_timeout() -> void:
 		3: # Left
 			spawn_pos.x = reference_pos.x - viewport_size.x/2 - padding
 			spawn_pos.y = reference_pos.y + randf_range(-viewport_size.y/2 - padding, viewport_size.y/2 + padding)
-	
-	instance.global_position = spawn_pos
-	$Asteroids.add_child(instance)
+
+	asteroid.position = spawn_pos
+	asteroid.global_position = spawn_pos
+	$Asteroids.add_child(asteroid)
+	asteroid.process_mode = Node.PROCESS_MODE_INHERIT
+	asteroid.visible = true
