@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var stats : Resource
+@export var invincible : bool = false
 
 @onready var projectile = preload("res://scenes/projectile.tscn")
 @onready var default_modulate = $ShipPolygon.modulate
@@ -111,12 +112,14 @@ func take_damage(damage : float) -> void:
 			get_tree().change_scene_to_file("res://scenes/game_over.tscn")
 		return
 	%DamageAnimation.play("damage_taken")
+	invincible = true
 	$ShipPolygon/DamageAnimTimer.start()
 	draw_shield()
 
 func clear_damage():
 	%DamageAnimation.stop()
 	$ShipPolygon.modulate = default_modulate
+	invincible = false
 
 func shoot():
 	if not $WeaponCooldown.is_stopped():

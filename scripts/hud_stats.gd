@@ -34,4 +34,4 @@ func _process(delta: float) -> void:
 
 	for stat_name in PickupStats.stat_names:
 		if stat_labels.has(stat_name):
-			stat_labels[stat_name].text = str(player.stats.get(stat_name))
+			stat_labels[stat_name].text = "%0.1f" % player.stats.get(stat_name)
