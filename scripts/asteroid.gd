@@ -68,8 +68,3 @@ func explode():
 		debris_instance.initial_velocity  = random_direction * explosion_velocity
 		get_parent().call_deferred("add_child", debris_instance)
 	queue_free()
-
-func _on_death_timer_timeout() -> void:
-	var rect = get_viewport_rect()
-	if not rect.has_point(global_position):
-		explode()
