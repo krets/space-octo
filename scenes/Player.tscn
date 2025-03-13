@@ -164,4 +164,7 @@ width = 15.03
 [node name="WeaponCooldown" type="Timer" parent="."]
 one_shot = true
 
+[node name="ProjectileExitPoint" type="Node2D" parent="."]
+position = Vector2(18, 0)
+
 [connection signal="timeout" from="ShipPolygon/DamageAnimTimer" to="." method="_on_damage_anim_timer_timeout"]

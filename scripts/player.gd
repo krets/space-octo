@@ -125,14 +125,14 @@ func shoot():
 	if not $WeaponCooldown.is_stopped():
 		return
 
-	print("Starting weapon timer: %s" % stats.weapon_cooldown)
 	$WeaponCooldown.wait_time = stats.weapon_cooldown
 	$WeaponCooldown.start()
 	var instance = projectile.instantiate()
 	
 	instance.dir = rotation + PI/2
-	instance.spawn_position = global_position
+	instance.spawn_position = $ProjectileExitPoint.global_position
 	instance.spawn_rotation = global_rotation
+	
 	instance.damage = stats.weapon_damage
 	instance.scale *= 1.0 + stats.weapon_damage/stats.max_weapon_damage
 	instance.velocity = velocity

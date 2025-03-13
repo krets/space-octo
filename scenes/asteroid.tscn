@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://unanq7oxhbih"]
+[gd_scene load_steps=5 format=3 uid="uid://unanq7oxhbih"]
 
 [ext_resource type="Script" uid="uid://cj21gb5qrxbm5" path="res://scripts/asteroid.gd" id="1_akfqu"]
-[ext_resource type="Shader" uid="uid://c7ukpmkor2omd" path="res://shaders/asteroid_trail.gdshader" id="2_6mo6b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6mo6b"]
 radius = 22.0907
@@ -17,11 +16,6 @@ func _on_body_entered(body: Node) -> void:
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_akfqu"]
 radius = 41.0122
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t4se3"]
-shader = ExtResource("2_6mo6b")
-shader_parameter/trail_length = 0.5
-shader_parameter/trail_opacity = 0.5
 
 [node name="Asteroid" type="CharacterBody2D"]
 collision_layer = 2
@@ -44,21 +38,6 @@ debug_color = Color(0.580392, 0, 0.188235, 0.34902)
 [node name="Timer" type="Timer" parent="Area2D/Damage"]
 unique_name_in_owner = true
 wait_time = 0.2
-
-[node name="ColorRect" type="ColorRect" parent="."]
-auto_translate_mode = 2
-material = SubResource("ShaderMaterial_t4se3")
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -64.0
-offset_right = 64.0
-offset_bottom = 64.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
