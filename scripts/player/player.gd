@@ -90,6 +90,8 @@ func do_pickup(stat_name: String, value: float) -> void:
 
 func take_damage(damage : float) -> void:
 	stats.health -= damage
+	stats.weapon_damage -= damage/2
+	stats.weapon_damage = max(1.0, stats.weapon_damage)
 	print("player received: %s damage" % damage)
 	if stats.health <= 0.0:
 		print("You dead now.")

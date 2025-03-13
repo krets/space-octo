@@ -1,14 +1,14 @@
 extends Resource
 class_name PlayerStats
 
-@export var thrust_speed : float = 100
-@export var brake_speed : float = 50
-@export var turn_rate : float = 5.0
-@export var max_speed : float = 600 
+@export var thrust_speed : float = 500
+@export var brake_speed : float = 250
+@export var turn_rate : float = 3.0
+@export var max_speed : float = 900 
 @export var max_health : float = 200
 @export var health : float = 100
-@export var weapon_cooldown : float = 1.0
-@export var weapon_damage : float = 1.0
+@export var weapon_cooldown : float = 0.2
+@export var weapon_damage : float = 10.0
 @export var max_weapon_damage : float = 100.0
 
 
