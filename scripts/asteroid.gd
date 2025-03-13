@@ -8,8 +8,20 @@ var bodies : Array = []
 
 var hit_damage : float = 0.08
 
+func generate_random_shape() -> PackedVector2Array:
+	var points = []
+	var num_points = randi_range(5, 10)
+	for i in range(num_points):
+		var angle = i * (PI * 2) / num_points
+		var radius = randf_range(10, 30)
+		points.append(Vector2(cos(angle), sin(angle)) * radius)
+	return PackedVector2Array(points)
+
 func _ready() -> void:
 	velocity = initial_velocity
+	var random_scale = randf_range(0.5, 1.5)
+	scale = Vector2(random_scale, random_scale)
+	$Polygon2D.polygon = generate_random_shape()
 	
 
 func _physics_process(delta: float) -> void:

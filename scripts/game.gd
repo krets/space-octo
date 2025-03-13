@@ -6,9 +6,7 @@ extends Node2D
 func _ready() -> void:
 	var size = get_viewport().size
 	$CanvasLayer/ColorRect.size = size
-	# $CanvasLayer/Starfield.size = size
 	print(ColorPalette.new().colors)
-	
 
 func _on_asteroid_spawner_timeout() -> void:
 	$AsteroidSpawner.wait_time = randf_range(1.0, asteroid_timer_max)
@@ -61,6 +59,6 @@ func _on_asteroid_spawner_timeout() -> void:
 
 	asteroid.position = spawn_pos
 	asteroid.global_position = spawn_pos
+	asteroid.visible = true
 	$Asteroids.add_child(asteroid)
 	asteroid.process_mode = Node.PROCESS_MODE_INHERIT
-	asteroid.visible = true
