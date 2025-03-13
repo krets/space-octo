@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 @export var stats : Resource
 
-
 @onready var projectile = preload("res://scenes/projectile.tscn")
 @onready var default_modulate = $ShipPolygon.modulate
 @onready var main = 	get_tree().get_root().get_node("Game")
@@ -70,16 +69,36 @@ func draw_shield() -> void:
 func do_pickup(stat_name: String, value: float) -> void:
 	var new_value = value + stats.get(stat_name)
 	var max_value = stats.get("max_%s" % stat_name)
-	if max_value:
-		new_value = min(max_value, new_value)
-	stats.set(stat_name, new_value)
+
+	if stat_name == "speed":
+		# Calculate speed boost percentage (0 to 1)
+		var speed_factor = new_value / stats.max_speed_boost
+		speed_factor = clamp(speed_factor, 0.0, 1.0)
+		
+		# Adjust thrust and brake speeds
+		stats.thrust_speed = lerp(stats.min_thrust_speed, stats.max_thrust_speed, speed_factor)
+		stats.brake_speed = lerp(stats.min_brake_speed, stats.max_brake_speed, speed_factor)
+		
+		# Adjust weapon cooldown
+		var before = stats.weapon_cooldown
+		stats.weapon_cooldown = lerp(stats.min_weapon_cooldown, stats.max_weapon_cooldown, speed_factor)
+		
+		print("Weapon cooldown %s -> %s" % [before, stats.weapon_cooldown])
+		# Store the speed value
+		stats.speed = new_value
+	else:
+		# Handle other stats normally
+		if max_value:
+			new_value = min(max_value, new_value)
+		stats.set(stat_name, new_value)
+
 	draw_shield()
 
-
 func take_damage(damage : float) -> void:
+	
 	stats.health -= damage
 	stats.weapon_damage -= damage/2
-	stats.weapon_damage = max(1.0, stats.weapon_damage)
+	stats.weapon_damage = max(stats.min_weapon_damage, stats.weapon_damage)
 	print("player received: %s damage" % damage)
 	if stats.health <= 0.0:
 		print("You dead now.")
@@ -103,6 +122,7 @@ func shoot():
 	if not $WeaponCooldown.is_stopped():
 		return
 
+	print("Starting weapon timer: %s" % stats.weapon_cooldown)
 	$WeaponCooldown.wait_time = stats.weapon_cooldown
 	$WeaponCooldown.start()
 	var instance = projectile.instantiate()

@@ -6,7 +6,7 @@ static var palette : Resource = preload("res://resources/color_palette.tres")
 
 # Must be <= number of colors in color_palette.tres
 static var stat_names = {
-	"fuel": 25,
+	"speed": 25,
 	"weapon_damage": 10,
 	"health": 15,
 }

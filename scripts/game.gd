@@ -13,6 +13,8 @@ func _ready() -> void:
 func _on_asteroid_spawner_timeout() -> void:
 	$AsteroidSpawner.wait_time = randf_range(1.0, asteroid_timer_max)
 	if $Asteroids.get_child_count() >= max_asteroids:
+		print("Despawn; child_count: %s" % $Asteroids.get_child_count())
+		print("Children: %s" % $Asteroids.get_children())
 		var player_position = %Player.global_position
 		var furthest_asteroid = null
 		var max_distance = -1.0
