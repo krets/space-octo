@@ -17,7 +17,8 @@ func _ready() -> void:
 	draw_shield()
 
 func _physics_process(delta: float) -> void:
-
+	if stats.health <= 0:
+		take_damage(0.0)  # trigger death if it somehow got skipped
 	if Input.is_action_pressed("turn_left"):
 		rotation -= stats.turn_rate * delta
 	elif Input.is_action_pressed("turn_right"):
@@ -46,7 +47,6 @@ func draw_shield() -> void:
 	if stats.health < stats.shield_display_min:
 		print("no shield display")
 		$CollisionShape2D.shape.radius = stats.shield_size_empty
-		#$CollisionShape2D/ShieldDisplay.self_modulate(Color.TRANSPARENT)
 		$CollisionShape2D/ShieldDisplay.modulate = Color.TRANSPARENT
 
 	elif stats.health <= stats.shield_grow_threshold:
@@ -60,7 +60,6 @@ func draw_shield() -> void:
 		shield_color.a = alpha
 		display.scale.x = 1.0 
 		display.scale.y = 1.0
-		#$CollisionShape2D/ShieldDisplay.self_modulate(shield_color)
 		$CollisionShape2D/ShieldDisplay.modulate = shield_color
 	else:
 		var denominator = (stats.max_health - stats.shield_grow_threshold)
@@ -96,7 +95,11 @@ func take_damage(damage : float) -> void:
 		print("You dead now.")
 		%DamageAnimation.play("death")
 		await %DamageAnimation.animation_finished
-		get_tree().change_scene_to_file("res://scenes/game_over.tscn")
+		var tree = get_tree()
+		if not tree:
+			print("Life is hard; the tree is null.")
+		else:
+			get_tree().change_scene_to_file("res://scenes/game_over.tscn")
 		return
 	%DamageAnimation.play("damage_taken")
 	$ShipPolygon/DamageAnimTimer.start()
@@ -118,6 +121,7 @@ func shoot():
 	instance.spawn_position = global_position
 	instance.spawn_rotation = global_rotation
 	instance.damage = stats.weapon_damage
+	instance.scale *= 1.0 + stats.weapon_damage/stats.max_weapon_damage
 	instance.velocity = velocity
 	main.add_child(instance)
 

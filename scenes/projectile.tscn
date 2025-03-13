@@ -5,9 +5,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_q3m7n"]
 radius = 7.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_softn"]
+[sub_resource type="Curve" id="Curve_c8fcr"]
+_data = [Vector2(0, 0.67433), 0.0, 0.0, 0, 0, Vector2(1, 0.40613), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="Projectile" type="CharacterBody2D"]
+top_level = true
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_c8fcr")
@@ -16,12 +19,13 @@ script = ExtResource("1_c8fcr")
 position = Vector2(1, 0)
 shape = SubResource("CircleShape2D_q3m7n")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_softn")
-position = Vector2(0.2, 0)
-scale = Vector2(0.8, 0.8)
-color = Color(1, 0, 1, 1)
-polygon = PackedVector2Array(-8, -2, 0, -5, 7, -4, 10, 0, 7, 4, 0, 5, -8, 2)
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(5, 0, -4, 0)
+width_curve = SubResource("Curve_c8fcr")
+default_color = Color(1, 0, 1, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
 
 [node name="Lifetime" type="Timer" parent="."]
 wait_time = 5.0
