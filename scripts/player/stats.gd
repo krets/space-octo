@@ -9,6 +9,8 @@ class_name PlayerStats
 @export var health : float = 100
 @export var weapon_cooldown : float = 1.0
 @export var weapon_damage : float = 1.0
+@export var max_weapon_damage : float = 100.0
+
 
 @export var shield_size_empty : float = 14.0
 @export var shield_size_min : float = 32.0
@@ -17,6 +19,7 @@ class_name PlayerStats
 @export var shield_grow_threshold : float = max_health/2
 
 @export var fuel : float = 0.0
+@export var max_fuel : float = 500.0
 
 @export var points_blue : int = 0
 @export var points_orange : int = 0

@@ -47,6 +47,8 @@ func draw_shield() -> void:
 		print("no shield display")
 		$CollisionShape2D.shape.radius = stats.shield_size_empty
 		#$CollisionShape2D/ShieldDisplay.self_modulate(Color.TRANSPARENT)
+		$CollisionShape2D/ShieldDisplay.modulate = Color.TRANSPARENT
+
 	elif stats.health <= stats.shield_grow_threshold:
 		print("fading shield display")
 		$CollisionShape2D.shape.radius = stats.shield_size_min
@@ -59,13 +61,14 @@ func draw_shield() -> void:
 		display.scale.x = 1.0 
 		display.scale.y = 1.0
 		#$CollisionShape2D/ShieldDisplay.self_modulate(shield_color)
+		$CollisionShape2D/ShieldDisplay.modulate = shield_color
 	else:
 		var denominator = (stats.max_health - stats.shield_grow_threshold)
 		if denominator != 0:
 			var grow_factor = (stats.health - stats.shield_grow_threshold) / denominator
 			var shield_size = grow_factor * (stats.shield_grow_size - stats.shield_size_min) + stats.shield_size_min
 			print("Growing shield %s : %s" % [grow_factor, shield_size])
-			$CollisionShape2D.shape.radius = shield_size
+			$CollisionShape2D.shape.radius = shield_size/2
 			display.scale.x = 1.0 + grow_factor
 			display.scale.y = 1.0 + grow_factor
 		else:
@@ -78,7 +81,11 @@ func draw_shield() -> void:
 			print("shield_size_min: ", stats.shield_size_min)
 
 func do_pickup(stat_name: String, value: float) -> void:
-	stats.set(stat_name, value + stats.get(stat_name))
+	var new_value = value + stats.get(stat_name)
+	var max_value = stats.get("max_%s" % stat_name)
+	if max_value:
+		new_value = min(max_value, new_value)
+	stats.set(stat_name, new_value)
 	draw_shield()
 
 
