@@ -31,7 +31,6 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.limit_length(stats.max_speed)
 		$AnimationPlayer.play("thrusting")
 	else:
-		$EngineHum.stop()
 		$MovementTrail.modulate = trail_color
 	
 	if Input.is_action_pressed("brake"):

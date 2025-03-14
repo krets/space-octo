@@ -9,6 +9,9 @@ var spawn_position : Vector2
 var spawn_rotation : float
 
 func _ready() -> void:
+	var max_damage = 200.0
+	if %Player:
+		max_damage = %Player.stats.max_weapon_damage
 	global_position = spawn_position
 	global_rotation = spawn_rotation
 	$Lifetime.wait_time = lifetime
@@ -18,7 +21,7 @@ func _ready() -> void:
 	$ShootSound.volume_db = randf_range(0.98, 1.02)
 	$HitSound.pitch_scale = randf_range(0.99, 1.01)
 	$HitSound.volume_db = randf_range(0.98, 1.02)
-	$Oomph.volume_db = lerp(-30.0, -0.5, damage/200)
+	$Oomph.volume_db = lerp(-30.0, -0.5, damage/max_damage)
 	print("Volume: %s" % $Oomph.volume_db)
 	$AnimationPlayer.play("pewpew")
 	

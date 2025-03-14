@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
-@export var stats : Resource = preload("res://resources/asteroid.tres")
+@export var base_stats : Resource = preload("res://resources/asteroid.tres")
 @export var angular_velocity : float = randf_range(-4.0, 4.0)  # Random value between 1.0 and 5.0
 @export var initial_velocity : Vector2 = Vector2(randf_range(-200, 200), randf_range(-200, 200)) 
-
+@onready var stats = base_stats.duplicate()
 var bodies : Array = []
 
 var hit_damage : float = 0.08
@@ -23,6 +23,8 @@ func _ready() -> void:
 	var random_scale = randf_range(0.5, 1.5)
 	scale = Vector2(random_scale, random_scale)
 	$Polygon2D.polygon = generate_random_shape()
+	$HealthBar.init_health(stats.health)
+	print("Spawned %s: %s" % [self, stats.health])
 	
 
 func _physics_process(delta: float) -> void:
@@ -57,7 +59,10 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 		%Timer.stop()
 
 func take_damage(damage : float) -> void:
+	print("taking %s damage" % damage)
 	stats.health -= damage
+	if $HealthBar:
+		$HealthBar.health = stats.health
 	if stats.health <= 0:
 		spawn_pickups()
 		explode()
@@ -69,15 +74,13 @@ func spawn_pickups():
 	get_parent().add_child(instance)
 
 func explode():
+	$AnimationPlayer.play("explode")
 	var debris_scene = preload("res://scenes/debris.tscn")
 	var number_of_debris = 10
 	var explosion_velocity = 1200
-
-
 	for i in range(number_of_debris):
 		var debris_instance = debris_scene.instantiate()
 		var random_direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
 		debris_instance.position = global_position 
 		debris_instance.initial_velocity  = random_direction * explosion_velocity
 		get_parent().call_deferred("add_child", debris_instance)
-	queue_free()

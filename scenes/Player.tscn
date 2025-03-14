@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dqo5pdkg21lrv"]
+[gd_scene load_steps=20 format=3 uid="uid://dqo5pdkg21lrv"]
 
 [ext_resource type="Script" uid="uid://c5maxheqlon8c" path="res://scripts/player.gd" id="1_p0vlq"]
 [ext_resource type="Resource" uid="uid://bpgbonsjy52o3" path="res://resources/player_stats.tres" id="2_v6fml"]
@@ -113,23 +113,6 @@ _data = {
 &"idle": SubResource("Animation_mdl7e")
 }
 
-[sub_resource type="Animation" id="Animation_cw2d6"]
-resource_name = "thrusting"
-length = 0.479
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("EngineHum:playing")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="Animation" id="Animation_khinc"]
 length = 0.001
 tracks/0/type = "value"
@@ -144,25 +127,17 @@ tracks/0/keys = {
 "update": 1,
 "values": [false]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AudioPewPew:playing")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
 
 [sub_resource type="Animation" id="Animation_bruh7"]
 resource_name = "shoot"
+
+[sub_resource type="Animation" id="Animation_cw2d6"]
+resource_name = "thrusting"
+length = 0.64
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AudioPewPew:playing")
+tracks/0/path = NodePath("EngineHum:playing")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -172,8 +147,12 @@ tracks/0/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_70d11"]
+resource_name = "Death"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bruh7"]
 _data = {
+&"Death": SubResource("Animation_70d11"),
 &"RESET": SubResource("Animation_khinc"),
 &"shoot": SubResource("Animation_bruh7"),
 &"thrusting": SubResource("Animation_cw2d6")
@@ -209,6 +188,7 @@ expand_mode = 2
 [node name="ShipPolygon" type="Polygon2D" parent="."]
 position = Vector2(4.76837e-07, -2.38419e-07)
 scale = Vector2(1.7, 1.77778)
+antialiased = true
 polygon = PackedVector2Array(-7, -9, 1.76471, -7.87499, 5.29412, -2.8125, 13, 0, 5.29412, 2.8125, 1.76471, 7.87499, -7, 9, -3.52941, 6.18749, -2.94118, 1.65059e-07, -3.52941, -5.06249)
 
 [node name="DamageAnimation" type="AnimationPlayer" parent="ShipPolygon"]
