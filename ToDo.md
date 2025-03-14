@@ -1,11 +1,17 @@
 ## ToDo
 
  - Audio:
-   - thrust
-   - shoot
-   - damage
-   - pickup
- - asteroidd show damage state
+   - thrust (humm.wav)
+   - shoot (zap_b6.wav)
+   - damage (duuup.wav)
+   - impact (laser to asteroid)
+   - asteroid to asteroid
+   - ship damage
+   - shield damage
+   - shield charge
+   - speed charge
+   - laser charge
+ - asteroid show damage state
  - enemy ships?
  - pause screen
  - waypoints 

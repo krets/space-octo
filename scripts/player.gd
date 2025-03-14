@@ -29,7 +29,9 @@ func _physics_process(delta: float) -> void:
 		velocity += thrust * delta
 		$MovementTrail.modulate = ColorNames.orange
 		velocity = velocity.limit_length(stats.max_speed)
+		$AnimationPlayer.play("thrusting")
 	else:
+		$EngineHum.stop()
 		$MovementTrail.modulate = trail_color
 	
 	if Input.is_action_pressed("brake"):
@@ -124,7 +126,6 @@ func clear_damage():
 func shoot():
 	if not $WeaponCooldown.is_stopped():
 		return
-
 	$WeaponCooldown.wait_time = stats.weapon_cooldown
 	$WeaponCooldown.start()
 	var instance = projectile.instantiate()

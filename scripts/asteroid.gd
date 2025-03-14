@@ -19,6 +19,7 @@ func generate_random_shape() -> PackedVector2Array:
 
 func _ready() -> void:
 	velocity = initial_velocity
+	#velocity = Vector2(10,10)
 	var random_scale = randf_range(0.5, 1.5)
 	scale = Vector2(random_scale, random_scale)
 	$Polygon2D.polygon = generate_random_shape()

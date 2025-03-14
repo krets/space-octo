@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmson2gis1gaa"]
+
+[sub_resource type="GDScript" id="GDScript_ohb82"]
+script/source = "extends CharacterBody2D
+
+var initial_velocity : Vector2
+var hit_damage : float = 1.0
+
+func _ready() -> void:
+	velocity += initial_velocity
+
+func _physics_process(delta):
+	move_and_slide()
+
+func _on_lifetime_timeout() -> void:
+	queue_free()
+
+func _on_damage_body_entered(body: Node2D) -> void:
+	if body.has_method(\"take_damage\"):
+		body.take_damage(hit_damage)
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ohb82"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wkiee"]
+radius = 8.0
+
+[node name="Debris" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = SubResource("GDScript_ohb82")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(-2.38419e-07, -3.38813e-21)
+scale = Vector2(0.194159, 0.194159)
+polygon = PackedVector2Array(-10.3008, -20.6017, -2.45591e-06, -10.3008, 18, -12, 10.3008, 1.22796e-06, 13, 19, -4, 22, -5.15042, 10.3008, -15, 16, -15.4513, 1.22796e-06, -21, -7)
+
+[node name="Bounce" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ohb82")
+
+[node name="Lifetime" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+autostart = true
+
+[node name="Damage" type="Area2D" parent="."]
+
+[node name="DamageCollision" type="CollisionShape2D" parent="Damage"]
+shape = SubResource("CircleShape2D_wkiee")
+debug_color = Color(1, 0, 0, 0.0784314)
+
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]
+[connection signal="area_entered" from="Damage" to="." method="_on_damage_area_entered"]
+[connection signal="body_entered" from="Damage" to="." method="_on_damage_body_entered"]

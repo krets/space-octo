@@ -1,8 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://dqo5pdkg21lrv"]
+[gd_scene load_steps=19 format=3 uid="uid://dqo5pdkg21lrv"]
 
 [ext_resource type="Script" uid="uid://c5maxheqlon8c" path="res://scripts/player.gd" id="1_p0vlq"]
 [ext_resource type="Resource" uid="uid://bpgbonsjy52o3" path="res://resources/player_stats.tres" id="2_v6fml"]
 [ext_resource type="PackedScene" uid="uid://ccgnwek2up0kc" path="res://scenes/movement_trail.tscn" id="3_qu4a1"]
+[ext_resource type="AudioStream" uid="uid://crji8qdteibg3" path="res://audio/sounds/humm.wav" id="4_qu4a1"]
+[ext_resource type="AudioStream" uid="uid://b62hqp8tsulig" path="res://audio/sounds/duuup.wav" id="5_70d11"]
+[ext_resource type="AudioStream" uid="uid://frlajmo0pxy1" path="res://audio/sounds/zap_b6.wav" id="6_70d11"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v6fml"]
 radius = 32.0
@@ -110,6 +113,72 @@ _data = {
 &"idle": SubResource("Animation_mdl7e")
 }
 
+[sub_resource type="Animation" id="Animation_cw2d6"]
+resource_name = "thrusting"
+length = 0.479
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EngineHum:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_khinc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EngineHum:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioPewPew:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_bruh7"]
+resource_name = "shoot"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioPewPew:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bruh7"]
+_data = {
+&"RESET": SubResource("Animation_khinc"),
+&"shoot": SubResource("Animation_bruh7"),
+&"thrusting": SubResource("Animation_cw2d6")
+}
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 3
 script = ExtResource("1_p0vlq")
@@ -164,7 +233,21 @@ width = 15.03
 [node name="WeaponCooldown" type="Timer" parent="."]
 one_shot = true
 
+[node name="EngineHum" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_qu4a1")
+
+[node name="Damage" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_70d11")
+
+[node name="AudioPewPew" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_70d11")
+
 [node name="ProjectileExitPoint" type="Node2D" parent="."]
 position = Vector2(18, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_bruh7")
+}
 
 [connection signal="timeout" from="ShipPolygon/DamageAnimTimer" to="." method="_on_damage_anim_timer_timeout"]
