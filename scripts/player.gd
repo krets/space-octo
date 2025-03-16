@@ -17,8 +17,6 @@ func _ready() -> void:
 	draw_shield()
 
 func _physics_process(delta: float) -> void:
-	if stats.health <= 0:
-		take_damage(0.0)  # trigger death if it somehow got skipped
 	if Input.is_action_pressed("turn_left"):
 		rotation -= stats.turn_rate * delta
 	elif Input.is_action_pressed("turn_right"):
@@ -104,18 +102,20 @@ func take_damage(damage : float) -> void:
 	print("player received: %s damage" % damage)
 	if stats.health <= 0.0:
 		print("You dead now.")
-		%DamageAnimation.play("death")
-		await %DamageAnimation.animation_finished
-		var tree = get_tree()
-		if not tree:
-			print("Life is hard; the tree is null.")
-		else:
-			get_tree().change_scene_to_file("res://scenes/game_over.tscn")
-		return
+		$AnimationPlayer.play("Death")
+
 	%DamageAnimation.play("damage_taken")
 	invincible = true
 	$ShipPolygon/DamageAnimTimer.start()
 	draw_shield()
+
+func change_scene():
+	var tree = get_tree()
+	if not tree:
+		print("Life is hard; the tree is null.")
+	else:
+		get_tree().change_scene_to_file("res://scenes/game_over.tscn")
+	return
 
 func clear_damage():
 	%DamageAnimation.stop()
