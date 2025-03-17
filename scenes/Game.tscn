@@ -1,14 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://fl2kqgotehqv"]
+[gd_scene load_steps=6 format=3 uid="uid://fl2kqgotehqv"]
 
 [ext_resource type="Script" uid="uid://1sg3fatw1k6i" path="res://scripts/game.gd" id="1_78awf"]
 [ext_resource type="PackedScene" uid="uid://cwuun8ra6ut7b" path="res://scenes/starfield.tscn" id="1_cpr0p"]
 [ext_resource type="PackedScene" uid="uid://dqo5pdkg21lrv" path="res://scenes/Player.tscn" id="2_cpr0p"]
+[ext_resource type="PackedScene" uid="uid://dvuv8n1lfcaor" path="res://scenes/grid_test.tscn" id="2_s0nni"]
 [ext_resource type="PackedScene" uid="uid://cha7k347d2gt3" path="res://scenes/hud_stats.tscn" id="3_s0nni"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_78awf")
 asteroid_timer_max = 3.0
 max_asteroids = 150
+
+[node name="GridTest" parent="." instance=ExtResource("2_s0nni")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -26,6 +29,8 @@ color = Color(0, 0, 0, 1)
 [node name="Starfield" parent="CanvasLayer" instance=ExtResource("1_cpr0p")]
 z_index = -1
 star_count = 200
+minor_grid_color = Color(0.3, 0.3, 0.3, 0)
+major_grid_color = Color(0.4, 0.4, 0.4, 0)
 
 [node name="HudStats" parent="CanvasLayer" instance=ExtResource("3_s0nni")]
 
