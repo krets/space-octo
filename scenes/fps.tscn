@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://g5wru21tevrd"]
+
+[ext_resource type="Script" uid="uid://5ta7ae1r56s3" path="res://scenes/fps.gd" id="1_jtrh3"]
+
+[node name="Fps" type="Node2D"]
+script = ExtResource("1_jtrh3")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Woo"

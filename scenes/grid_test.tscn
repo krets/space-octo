@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=4 uid="uid://dvuv8n1lfcaor"]
+[gd_scene load_steps=5 format=3 uid="uid://dvuv8n1lfcaor"]
 
 [ext_resource type="Texture2D" uid="uid://ww20t531552o" path="res://images/grid.png" id="1_o2y7x"]
 [ext_resource type="Script" uid="uid://bsj7ug8jggp0w" path="res://scenes/tile_map_layer.gd" id="2_2ivm0"]
@@ -20,6 +20,5 @@ sources/0 = SubResource("TileSetAtlasSource_rk31g")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 modulate = Color(1, 1, 1, 0.172549)
-tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAAEAAAAAAAAAAAADAAEAAAAAAAAAAAADAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAACAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAFAAAAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_1283f")
 script = ExtResource("2_2ivm0")

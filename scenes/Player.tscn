@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dqo5pdkg21lrv"]
+[gd_scene load_steps=21 format=3 uid="uid://dqo5pdkg21lrv"]
 
 [ext_resource type="Script" uid="uid://c5maxheqlon8c" path="res://scripts/player.gd" id="1_p0vlq"]
 [ext_resource type="Resource" uid="uid://bpgbonsjy52o3" path="res://resources/player_stats.tres" id="2_v6fml"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://crji8qdteibg3" path="res://audio/sounds/humm.wav" id="4_qu4a1"]
 [ext_resource type="AudioStream" uid="uid://b62hqp8tsulig" path="res://audio/sounds/duuup.wav" id="5_70d11"]
 [ext_resource type="AudioStream" uid="uid://d2pb6ladbiwug" path="res://audio/sounds/Explosion2.wav" id="6_70d11"]
+[ext_resource type="PackedScene" uid="uid://g5wru21tevrd" path="res://scenes/fps.tscn" id="6_cw2d6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v6fml"]
 radius = 32.0
@@ -410,6 +411,10 @@ position = Vector2(18, 0)
 libraries = {
 &"": SubResource("AnimationLibrary_bruh7")
 }
+
+[node name="Fps" parent="." instance=ExtResource("6_cw2d6")]
+position = Vector2(1.69407e-21, -55)
+scale = Vector2(1.7, 1.77778)
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_70d11")
