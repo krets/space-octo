@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-@export var thrust_speed: float = 100
-@export var brake_speed: float = 100
+@export var thrust_speed: float = 400
+@export var brake_speed: float = 400
 @export var rotation_speed: float = 5.0
 @export var max_speed: float = 600 
 
