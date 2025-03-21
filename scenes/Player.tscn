@@ -413,6 +413,7 @@ libraries = {
 }
 
 [node name="Fps" parent="." instance=ExtResource("6_cw2d6")]
+visible = false
 position = Vector2(1.69407e-21, -55)
 scale = Vector2(1.7, 1.77778)
 

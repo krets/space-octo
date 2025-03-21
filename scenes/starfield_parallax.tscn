@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=3 uid="uid://ooa46g88c56o"]
+
+[ext_resource type="Texture2D" uid="uid://h0fjykk3b0ff" path="res://images/starfield_far.png" id="1_fbvpv"]
+[ext_resource type="Texture2D" uid="uid://bsoewm5m0t683" path="res://images/starfield_background.png" id="1_sbtec"]
+[ext_resource type="Texture2D" uid="uid://138jb0cl1vpf" path="res://images/starfield_mid.png" id="2_sbtec"]
+[ext_resource type="Texture2D" uid="uid://cuk0eihcwtq2x" path="res://images/starfield_near.png" id="3_i6t6g"]
+[ext_resource type="Texture2D" uid="uid://btbnq0rqk3fv" path="res://images/starfield_nearest.png" id="5_i6t6g"]
+
+[node name="StarfieldParallax" type="ParallaxBackground"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = 960.0
+offset_top = 540.0
+offset_right = 960.0
+offset_bottom = 540.0
+scale = Vector2(23.56, 11.16)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.215763, 0.0365593, 0.0268556, 1)
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+
+[node name="BG" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(3840, 3840)
+
+[node name="Sprite2D" type="Sprite2D" parent="BG"]
+texture = ExtResource("1_sbtec")
+centered = false
+
+[node name="Far" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.2, 0.2)
+motion_mirroring = Vector2(3840, 3840)
+
+[node name="Sprite2D" type="Sprite2D" parent="Far"]
+texture = ExtResource("1_fbvpv")
+centered = false
+
+[node name="Mid" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.3, 0.3)
+motion_mirroring = Vector2(3840, 3840)
+
+[node name="Sprite2D" type="Sprite2D" parent="Mid"]
+texture = ExtResource("2_sbtec")
+centered = false
+
+[node name="Near" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.7, 0.7)
+motion_mirroring = Vector2(3840, 3840)
+
+[node name="Sprite2D" type="Sprite2D" parent="Near"]
+texture = ExtResource("3_i6t6g")
+centered = false
+
+[node name="Nearest" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(3840, 3840)
+
+[node name="Sprite2D" type="Sprite2D" parent="Nearest"]
+texture = ExtResource("5_i6t6g")
+centered = false
