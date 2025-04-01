@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqo5pdkg21lrv"]
+
+[ext_resource type="Script" uid="uid://c5maxheqlon8c" path="res://scripts/player.gd" id="1_p0vlq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v6fml"]
+radius = 32.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 3
+script = ExtResource("1_p0vlq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_v6fml")
+disabled = true
+
+[node name="ShipPolygon" type="Polygon2D" parent="."]
+position = Vector2(4.76837e-07, -2.38419e-07)
+scale = Vector2(1.7, 1.77778)
+antialiased = true
+polygon = PackedVector2Array(-7, -9, 1.76471, -7.87499, 5.29412, -2.8125, 13, 0, 5.29412, 2.8125, 1.76471, 7.87499, -7, 9, -3.52941, 6.18749, -2.94118, 1.65059e-07, -3.52941, -5.06249)
+
+[node name="Camera2D" type="Camera2D" parent="."]

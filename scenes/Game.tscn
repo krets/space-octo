@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://fl2kqgotehqv"]
+
+[ext_resource type="Script" uid="uid://1sg3fatw1k6i" path="res://scripts/game.gd" id="1_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://ooa46g88c56o" path="res://scenes/starfield_parallax.tscn" id="2_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://dqo5pdkg21lrv" path="res://scenes/Player.tscn" id="3_iywne"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_lnu2h")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="CanvasLayer"]
+layer = -128
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/CanvasLayer"]
+z_index = -200
+offset_left = -5.0
+offset_top = -12.0
+offset_right = 1950.0
+offset_bottom = 1101.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0, 0, 0, 1)
+
+[node name="StarfieldParallax" parent="CanvasLayer" instance=ExtResource("2_lbhrr")]
+
+[node name="Player" parent="." instance=ExtResource("3_iywne")]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(973, 551)
+motion_mode = 1
