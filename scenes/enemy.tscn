@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmijd4k2jph82"]
+
+[ext_resource type="Script" uid="uid://cp80ixdffrggx" path="res://scripts/enemy.gd" id="1_md0e3"]
+[ext_resource type="Texture2D" uid="uid://ck7ps4hbrogmo" path="res://images/red_ship.png" id="2_md0e3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ra3w"]
+radius = 22.0227
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_md0e3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.210937, 0.210937)
+texture = ExtResource("2_md0e3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4ra3w")

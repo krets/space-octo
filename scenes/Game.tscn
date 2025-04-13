@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://fl2kqgotehqv"]
+[gd_scene load_steps=6 format=3 uid="uid://fl2kqgotehqv"]
 
 [ext_resource type="Script" uid="uid://1sg3fatw1k6i" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://ooa46g88c56o" path="res://scenes/starfield_parallax.tscn" id="2_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://dqo5pdkg21lrv" path="res://scenes/Player.tscn" id="3_iywne"]
+[ext_resource type="PackedScene" uid="uid://bmijd4k2jph82" path="res://scenes/enemy.tscn" id="4_78awf"]
+[ext_resource type="PackedScene" uid="uid://bj28te1thhmfx" path="res://scenes/enemy_bullet.tscn" id="5_s0nni"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lnu2h")
@@ -30,3 +32,67 @@ unique_name_in_owner = true
 z_index = 1
 position = Vector2(973, 551)
 motion_mode = 1
+
+[node name="enemy" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(589, 363)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy2" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(591, 247)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy3" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(492, 241)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy4" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(485, 361)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy5" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(683, 245)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy6" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(687, 369)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy7" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(387, 230)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy8" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(370, 358)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy9" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(581, 610)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy10" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(583, 494)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy11" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(484, 488)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy12" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(477, 608)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy13" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(675, 492)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy14" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(679, 616)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy15" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(379, 477)
+bullet_scene = ExtResource("5_s0nni")
+
+[node name="enemy16" parent="." instance=ExtResource("4_78awf")]
+position = Vector2(362, 605)
+bullet_scene = ExtResource("5_s0nni")

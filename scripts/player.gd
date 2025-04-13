@@ -28,6 +28,8 @@ var dash_direction = Vector2.ZERO
 var is_charging = false
 var charge_timer = 0.0
 
+func _ready():
+	add_to_group("player")
 
 func _physics_process(delta: float) -> void:
 	# Handle rotation

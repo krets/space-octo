@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bj28te1thhmfx"]
+
+[ext_resource type="Script" uid="uid://btot27nu2vevf" path="res://scripts/enemy_bullet.gd" id="1_qx7rs"]
+[ext_resource type="Texture2D" uid="uid://ba2ujso7umty4" path="res://images/splat.png" id="2_38r62"]
+
+[node name="EnemyBullet" type="Node2D"]
+script = ExtResource("1_qx7rs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_38r62")
