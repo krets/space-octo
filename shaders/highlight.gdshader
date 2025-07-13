@@ -6,10 +6,10 @@ uniform float outline_width : hint_range(0, 10) = 3.0;
 void fragment() {
     vec4 col = texture(TEXTURE, UV);
     vec2 ps = TEXTURE_PIXEL_SIZE;
-    
+
     float a;
     float maxa = col.a;
-    
+
     // Use distance from center for smoother outline
     for(float x = -outline_width; x <= outline_width; x++) {
         for(float y = -outline_width; y <= outline_width; y++) {
@@ -20,7 +20,7 @@ void fragment() {
             }
         }
     }
-    
+
     vec4 final_color = mix(highlight_color, col, col.a);
     COLOR = mix(highlight_color, final_color, step(0.5, col.a));
     COLOR.a = smoothstep(0.05, 0.1, maxa);  // Smoother alpha transition

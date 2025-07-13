@@ -5,6 +5,7 @@ var scannable_objects = [] # All objects in scan area
 var current_selected_object = null
 var current_index = -1
 
+
 @export var default_highlight_color = Color(1.0, 1.0, 0.0, 1.0) # Yellow/default highlight
 @export var selected_highlight_color = Color(0.0, 0.6, 1.0, 1.0) # Blue highlight
 
@@ -69,11 +70,20 @@ func add_highlight(body, color):
 		material.shader = highlight_material
 		material.set_shader_parameter("highlight_color", color)
 		sprite.material = material
+	elif body.has_node("ColorRect"):
+		var color_rect = body.get_node("ColorRect")
+		color_rect.material.set_shader_parameter("highlight_color", color)
+		color_rect.material.set_shader_parameter("highlight_enabled", true)
+
 
 func remove_highlight(body):
 	if body.has_node("Sprite2D"):
 		var sprite = body.get_node("Sprite2D")
 		sprite.material = null
+	elif body.has_node("ColorRect"):
+		var color_rect = body.get_node("ColorRect")
+		color_rect.material.set_shader_parameter("highlight_enabled", false)
+
 	if current_selected_object == body and ui_instance:
 		ui_instance.hide() 
 
