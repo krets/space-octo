@@ -16,14 +16,14 @@ uniform float continent_seed : hint_range(0.0, 1000.0) = 42.0;
 uniform float terrain_seed : hint_range(0.0, 1000.0) = 123.0;
 uniform float river_seed : hint_range(0.0, 1000.0) = 456.0;
 uniform float detail_seed : hint_range(0.0, 1000.0) = 789.0;
+uniform float cloud_seed : hint_range(0.0, 1000.0) = 999.0;
 
 // === OUTPUT CONTROL ===
 // Choose what to output: 0=Color, 1=Specular, 2=Normal Map
 uniform int output_mode : hint_range(0, 2) = 0;
 
 // Normal map intensity control
-uniform float normal_map_intensity : hint_range(0.0, 2.0) = 0.1
-;
+uniform float normal_map_intensity : hint_range(0.0, 2.0) = 0.1;
 
 // === SPHERE WARPING ===
 // Spherical distortion to simulate 3D curvature
@@ -34,6 +34,10 @@ uniform float sphere_strength : hint_range(-5.0, 5.0) = -1.25;
 uniform vec2 light_direction = vec2(0.3, 0.3);
 uniform float light_intensity : hint_range(0.0, 5.0) = 1;
 uniform vec3 light_color : source_color = vec3(1.0, 0.95, 0.8);
+
+// Shadow color tinting
+uniform vec3 shadow_tint : source_color = vec3(0.5, 0.6, 0.8);
+uniform float shadow_tint_strength : hint_range(0.0, 1.0) = 0.2;
 
 // Ambient lighting
 uniform float ambient_light : hint_range(0, 3) = 0.3;
@@ -49,6 +53,8 @@ uniform float rim_light_falloff : hint_range(0.0, 4.0) = 2.0;
 uniform float continent_scale : hint_range(0.1, 50) = 3;
 uniform float continent_threshold : hint_range(0.0, 0.8) = 0.5;
 uniform float continent_sharpness : hint_range(0.1, 1.0) = 0.25;
+uniform float continent_octaves : hint_range(1, 8) = 3;
+uniform float continent_persistence : hint_range(0.1, 1.0) = 0.6;
 uniform float ocean_depth : hint_range(0.0, 1) = 0.4;
 
 // Domain warping for realistic coastlines
@@ -61,17 +67,45 @@ uniform float terrain_scale : hint_range(0.1, 50.0) = 5.0;
 uniform float terrain_strength : hint_range(0.0, 3.0) = 0.75;
 uniform float terrain_octaves : hint_range(1, 20) = 3;
 uniform float terrain_persistence : hint_range(0.1, 20) = 0.5;
+uniform float terrain_softness : hint_range(0.01, 0.5) = 0.1;
 
 // Secondary detail noise (fine features)
 uniform float detail_scale : hint_range(2.0, 20.0) = 8.0;
 uniform float detail_strength : hint_range(0.0, 0.5) = 0.2;
 uniform float detail_octaves : hint_range(1, 25) = 2;
 
+// Terrain height thresholds for better mountain visibility
+uniform float mountain_threshold : hint_range(0.3, 0.9) = 0.7;
+uniform float highland_threshold : hint_range(0.1, 0.7) = 0.4;
+
+// === CLOUD/ATMOSPHERE LAYER ===
+// Cloud generation
+uniform float cloud_coverage : hint_range(0.0, 1.0) = 0.4;
+uniform float cloud_scale : hint_range(0.5, 20.0) = 4.0;
+uniform float cloud_stretch_x : hint_range(0.1, 5.0) = 1.0;
+uniform float cloud_stretch_y : hint_range(0.1, 5.0) = 1.0;
+uniform float cloud_octaves : hint_range(1, 6) = 3;
+uniform float cloud_persistence : hint_range(0.1, 1.0) = 0.5;
+uniform float cloud_density : hint_range(0.0, 2.0) = 0.8;
+uniform float cloud_sharpness : hint_range(0.01, 0.5) = 0.1;
+
+// Cloud appearance
+uniform vec3 cloud_color : source_color = vec3(1.0, 1.0, 1.0);
+uniform vec3 cloud_shadow_color : source_color = vec3(0.7, 0.7, 0.8);
+uniform float cloud_opacity : hint_range(0.0, 1.0) = 0.7;
+uniform float cloud_shadow_strength : hint_range(0.0, 1.0) = 0.3;
+
+// Cloud animation offset (for rotation)
+uniform float cloud_offset_x : hint_range(-2.0, 2.0) = 0.0;
+uniform float cloud_offset_y : hint_range(-2.0, 2.0) = 0.0;
+
 // === GEOGRAPHIC FEATURES ===
 // River system
 uniform float river_scale : hint_range(2.0, 15.0) = 0.5;
 uniform float river_strength : hint_range(0.0, 3) = 0.05;
 uniform float river_width : hint_range(0.01, 2) = 0.05;
+uniform float river_octaves : hint_range(1, 6) = 2;
+uniform float river_persistence : hint_range(0.1, 1.0) = 0.5;
 
 // Polar ice caps
 uniform float ice_cap_size : hint_range(0.0, 0.4) = 0.05;
@@ -175,12 +209,14 @@ vec2 domain_warp_seeded(vec2 p, float strength, float scale, float seed) {
     return p + vec2(warp_x, warp_y) * strength;
 }
 
-// Flow noise for river generation with seed
-float flow_noise_seeded(vec2 p, float scale, float seed) {
+// Flow noise for river generation with seed and octaves
+float flow_noise_seeded(vec2 p, float scale, float seed, float octaves, float persistence) {
     // Create flow field using multiple noise octaves
     vec2 flow_p = p * scale;
-    float n1 = fractal_noise_seeded(flow_p, 2.0, 0.5, seed);
-    float n2 = fractal_noise_seeded(flow_p + vec2(100.0, 50.0), 2.0, 0.5, seed + 25.0);
+
+    // Generate multi-octave noise for more detailed rivers
+    float n1 = fractal_noise_seeded(flow_p, octaves, persistence, seed);
+    float n2 = fractal_noise_seeded(flow_p + vec2(100.0, 50.0), octaves, persistence, seed + 25.0);
 
     // Create ridged noise for river valleys
     float ridge = abs(n1 - 0.5) * 2.0;
@@ -207,6 +243,34 @@ vec2 sphere_warp(vec2 uv, float strength) {
     float scale_factor = mix(1.0, z / planet_radius, strength);
 
     return uv * scale_factor;
+}
+
+// Calculate cloud coverage
+float calculate_clouds(vec2 uv, vec2 original_uv) {
+    // Apply cloud offset for independent rotation
+    vec2 cloud_uv = uv + vec2(cloud_offset_x, cloud_offset_y);
+
+    // Apply cloud stretching
+    cloud_uv.x *= cloud_stretch_x;
+    cloud_uv.y *= cloud_stretch_y;
+
+    // Generate base cloud noise
+    float cloud_noise = fractal_noise_seeded(cloud_uv * cloud_scale, cloud_octaves, cloud_persistence, cloud_seed);
+
+    // Apply coverage threshold with smooth transition
+    float cloud_mask = smoothstep(1.0 - cloud_coverage - cloud_sharpness,
+                                 1.0 - cloud_coverage + cloud_sharpness,
+                                 cloud_noise);
+
+    // Apply density multiplication
+    cloud_mask *= cloud_density;
+
+    // Fade clouds near planet edges
+    float edge_distance = length(original_uv) / planet_radius;
+    float edge_fade = 1.0 - smoothstep(0.8, 1.0, edge_distance);
+    cloud_mask *= edge_fade;
+
+    return clamp(cloud_mask, 0.0, 1.0);
 }
 
 // Calculate surface normal for lighting
@@ -242,6 +306,18 @@ float calculate_lighting(vec3 surface_normal, vec2 light_dir) {
 
     // Clamp to reasonable range
     return clamp(final_lighting, 0.0, 2.0);
+}
+
+// Calculate shadow areas for tinting
+float calculate_shadow_factor(vec3 surface_normal, vec2 light_dir) {
+    // Convert 2D light direction to 3D
+    vec3 light_direction_3d = normalize(vec3(light_dir.x, light_dir.y, 0.5));
+
+    // Calculate how much the surface faces away from light (shadow factor)
+    float shadow_factor = 1.0 - max(dot(surface_normal, light_direction_3d), 0.0);
+    shadow_factor = smoothstep(0.3, 0.8, shadow_factor); // Smooth shadow transition
+
+    return shadow_factor;
 }
 
 // Calculate rim lighting effect
@@ -283,7 +359,7 @@ float calculate_specular(float continent_mask, float river_mask, float ice_cap_m
         // ICE - medium specularity
         specular = mix(specular, 0.4, ice_cap_mask);
 
-        // RIVERS - high specularity (same as water)
+        // RIVERS - high specularity (same as water) since they're water features
         specular = mix(specular, 0.9, river_mask);
     } else {
         // OCEAN AREAS - high specularity
@@ -318,9 +394,9 @@ vec3 calculate_normal_map(vec2 uv, vec2 original_uv, float continent_mask, float
 
     // Apply continent mask (only show terrain on land)
     float continent_right = smoothstep(continent_threshold - continent_sharpness, continent_threshold + continent_sharpness,
-                                     fractal_noise_seeded(warped_uv_right * continent_scale, 4.0, 0.6, continent_seed));
+                                     fractal_noise_seeded(warped_uv_right * continent_scale, continent_octaves, continent_persistence, continent_seed));
     float continent_up = smoothstep(continent_threshold - continent_sharpness, continent_threshold + continent_sharpness,
-                                   fractal_noise_seeded(warped_uv_up * continent_scale, 4.0, 0.6, continent_seed));
+                                   fractal_noise_seeded(warped_uv_up * continent_scale, continent_octaves, continent_persistence, continent_seed));
 
     terrain_right *= continent_right;
     terrain_up *= continent_up;
@@ -337,7 +413,7 @@ vec3 calculate_normal_map(vec2 uv, vec2 original_uv, float continent_mask, float
     return normal;
 }
 
-
+// === MAIN SHADER FUNCTION ===
 void fragment() {
     // Get UV coordinates centered around (0.5, 0.5)
     vec2 original_uv = UV - 0.5;
@@ -361,8 +437,8 @@ void fragment() {
     // Apply domain warping for realistic coastlines
     vec2 warped_uv = domain_warp_seeded(uv, warp_strength, warp_scale, continent_seed);
 
-    // Generate continental base using warped coordinates
-    float continent_noise = fractal_noise_seeded(warped_uv * continent_scale, 4.0, 0.6, continent_seed);
+    // Generate continental base using warped coordinates with octaves
+    float continent_noise = fractal_noise_seeded(warped_uv * continent_scale, continent_octaves, continent_persistence, continent_seed);
 
     // Create sharp continent/ocean boundaries
     float continent_mask = smoothstep(continent_threshold - continent_sharpness,
@@ -384,10 +460,13 @@ void fragment() {
     land_terrain *= continent_mask; // Only on continents
 
     // === RIVER SYSTEM ===
-    // Generate rivers using flow noise
-    float river_noise = flow_noise_seeded(warped_uv, river_scale, river_seed);
+    // Generate rivers using improved flow noise with octaves
+    float river_noise = flow_noise_seeded(warped_uv, river_scale, river_seed, river_octaves, river_persistence);
     float river_mask = smoothstep(1.0 - river_width, 1.0, river_noise);
-    river_mask *= continent_mask; // Rivers only on land
+
+    // Rivers should flow to coastlines - use original continent mask but ensure they're only on land
+    river_mask *= continent_mask; // Use original mask so rivers can reach coastlines
+    river_mask *= step(0.5, continent_mask); // But ensure they don't appear in ocean (hard cutoff)
     river_mask *= river_strength;
 
     // === POLAR ICE CAPS ===
@@ -422,101 +501,145 @@ void fragment() {
     float ocean_depth_noise = fractal_noise_seeded(uv * 2.0, 3.0, 0.5, detail_seed + 200.0);
     float ocean_depth_factor = (1.0 - continent_mask) * (ocean_depth_noise * ocean_depth + ocean_depth);
 
+    // === CLOUD CALCULATION ===
+    // Calculate cloud coverage
+    float cloud_mask = calculate_clouds(uv, original_uv);
+
     // === OUTPUT MODE SELECTION ===
-    vec3 base_color;
-
-    if (continent_mask > 0.5) {
-        // LAND AREAS
-        vec3 land_color;
-
-        // Determine base land color based on terrain height
-        if (land_terrain > 0.6) {
-            land_color = mountain_color;
-        } else if (land_terrain > 0.3) {
-            land_color = highland_color;
-        } else {
-            land_color = lowland_color;
-        }
-
-        // Apply desert coloring
-        land_color = mix(land_color, desert_color, desert_mask);
-
-        // Apply ice cap coloring
-        land_color = mix(land_color, ice_color, ice_cap_mask);
-
-        // Add coastal beaches near water
-        float coast_distance = smoothstep(continent_threshold - coastal_blend,
-                                        continent_threshold, continent_noise);
-        land_color = mix(beach_color, land_color, coast_distance);
-
-        base_color = land_color;
+    if (output_mode == 1) {
+        // SPECULAR MAP OUTPUT
+        float specular = calculate_specular(continent_mask, river_mask, ice_cap_mask);
+        COLOR = vec4(vec3(specular), planet_mask);
+    } else if (output_mode == 2) {
+        // NORMAL MAP OUTPUT
+        vec3 normal_map = calculate_normal_map(uv, original_uv, continent_mask, land_terrain);
+        COLOR = vec4(normal_map, planet_mask);
     } else {
-        // OCEAN AREAS
-        vec3 ocean_color = mix(deep_ocean_color, shallow_water_color,
-                              1.0 - ocean_depth_factor);
+        // === COLOR MODE (DEFAULT) ===
+        vec3 base_color;
 
-        // Apply ice cap coloring to ocean (sea ice)
-        ocean_color = mix(ocean_color, ice_color, ice_cap_mask * 0.7);
+        if (continent_mask > 0.5) {
+            // LAND AREAS
+            vec3 land_color;
 
-        base_color = ocean_color;
-    }
+            // Use the actual land_terrain value (which already includes continent masking)
+            // Apply terrain softness to thresholds for smooth transitions
+            float soft_mountain = mountain_threshold - terrain_softness;
+            float soft_highland = highland_threshold - terrain_softness;
 
-    // === RIVERS ===
-    // Apply river coloring on top of land
-    base_color = mix(base_color, river_color, river_mask);
+            // Determine base land color based on terrain height with smooth transitions
+            if (land_terrain > soft_mountain) {
+                // Mountain regions
+                float mountain_blend = smoothstep(soft_mountain, mountain_threshold + terrain_softness, land_terrain);
+                land_color = mix(highland_color, mountain_color, mountain_blend);
+            } else if (land_terrain > soft_highland) {
+                // Highland regions
+                float highland_blend = smoothstep(soft_highland, highland_threshold + terrain_softness, land_terrain);
+                land_color = mix(lowland_color, highland_color, highland_blend);
+            } else {
+                // Lowland regions
+                land_color = lowland_color;
+            }
 
-    // === LIGHTING CALCULATION ===
-    // Calculate surface normal for the current position
-    vec3 surface_normal = calculate_surface_normal(uv, original_uv);
+            // Apply desert coloring
+            land_color = mix(land_color, desert_color, desert_mask);
 
-    // Calculate primary lighting factor
-    float diffuse_lighting = calculate_lighting(surface_normal, light_direction);
+            // Apply ice cap coloring
+            land_color = mix(land_color, ice_color, ice_cap_mask);
 
-    // Calculate rim lighting
-    float rim_lighting = calculate_rim_light(surface_normal, original_uv, light_direction);
+            // Add coastal beaches near water
+            float coast_distance = smoothstep(continent_threshold - coastal_blend,
+                                            continent_threshold, continent_noise);
+            land_color = mix(beach_color, land_color, coast_distance);
 
-    // Apply primary lighting to the base color
-    vec3 diffuse_contribution = base_color * light_color * diffuse_lighting;
+            base_color = land_color;
+        } else {
+            // OCEAN AREAS
+            vec3 ocean_color = mix(deep_ocean_color, shallow_water_color,
+                                  1.0 - ocean_depth_factor);
 
-    // Apply ambient lighting with color
-    vec3 ambient_contribution = base_color * ambient_color * ambient_light;
+            // Apply ice cap coloring to ocean (sea ice)
+            ocean_color = mix(ocean_color, ice_color, ice_cap_mask * 0.7);
 
-    // Apply rim lighting
-    vec3 rim_contribution = rim_light_color * rim_lighting;
-
-    // Combine all lighting contributions
-    vec3 lit_color = diffuse_contribution + ambient_contribution + rim_contribution;
-
-    // === PLANETARY CORE GRADIENT ===
-    // Create core glow effect
-    float radial_gradient = distance / planet_radius;
-    float core_influence = 1.0 - smoothstep(0.0, core_size, radial_gradient);
-    vec3 core_glow = core_color * core_influence;
-
-    // Blend core with surface features (subtle effect)
-    lit_color = mix(lit_color, core_glow, core_influence * 0.15);
-
-    // === COLOR VARIATION ===
-    // Add subtle color variation
-    float variation_noise = fractal_noise_seeded(uv * 4.0, 3.0, 0.6, detail_seed + 100.0);
-    vec3 final_color = mix(lit_color, lit_color * variation_tint,
-                          variation_noise * color_variation);
-
-    // Apply planet mask to create final color
-    final_color *= planet_mask;
-
-    // === OUTLINE EFFECT ===
-    if (highlight_enabled && original_distance > planet_radius - edge_softness) {
-        float outline_inner = planet_radius;
-        float outline_outer = planet_radius + outline_width * 0.01;
-
-        if (original_distance >= outline_inner && original_distance <= outline_outer) {
-            float outline_factor = 1.0 - smoothstep(outline_inner, outline_outer, original_distance);
-            final_color = mix(final_color, highlight_color.rgb, outline_factor);
-            planet_mask = max(planet_mask, outline_factor * highlight_color.a);
+            base_color = ocean_color;
         }
-    }
 
-    // Set output color with alpha for transparency
-    COLOR = vec4(final_color, planet_mask);
+        // === RIVERS ===
+        // Apply river coloring on top of land
+        base_color = mix(base_color, river_color, river_mask);
+
+        // === LIGHTING CALCULATION ===
+        // Calculate surface normal for the current position
+        vec3 surface_normal = calculate_surface_normal(uv, original_uv);
+
+        // Calculate primary lighting factor
+        float diffuse_lighting = calculate_lighting(surface_normal, light_direction);
+
+        // Calculate shadow factor for tinting
+        float shadow_factor = calculate_shadow_factor(surface_normal, light_direction);
+
+        // Calculate rim lighting
+        float rim_lighting = calculate_rim_light(surface_normal, original_uv, light_direction);
+
+        // Apply primary lighting to the base color
+        vec3 diffuse_contribution = base_color * light_color * diffuse_lighting;
+
+        // Apply ambient lighting with color
+        vec3 ambient_contribution = base_color * ambient_color * ambient_light;
+
+        // Apply rim lighting
+        vec3 rim_contribution = rim_light_color * rim_lighting;
+
+        // Combine all lighting contributions
+        vec3 lit_color = diffuse_contribution + ambient_contribution + rim_contribution;
+
+        // Apply shadow tinting
+        lit_color = mix(lit_color, lit_color * shadow_tint, shadow_factor * shadow_tint_strength);
+
+        // === CLOUD SHADOWS ===
+        // Apply cloud shadows to surface
+        vec3 cloud_shadowed_color = mix(lit_color, lit_color * cloud_shadow_color, cloud_mask * cloud_shadow_strength);
+
+        // === PLANETARY CORE GRADIENT ===
+        // Create core glow effect
+        float radial_gradient = distance / planet_radius;
+        float core_influence = 1.0 - smoothstep(0.0, core_size, radial_gradient);
+        vec3 core_glow = core_color * core_influence;
+
+        // Blend core with surface features (subtle effect)
+        cloud_shadowed_color = mix(cloud_shadowed_color, core_glow, core_influence * 0.15);
+
+        // === COLOR VARIATION ===
+        // Add subtle color variation
+        float variation_noise = fractal_noise_seeded(uv * 4.0, 3.0, 0.6, detail_seed + 100.0);
+        vec3 surface_final = mix(cloud_shadowed_color, cloud_shadowed_color * variation_tint,
+                                variation_noise * color_variation);
+
+        // === CLOUD LAYER ===
+        // Calculate cloud lighting (clouds are lit by the same light source)
+        float cloud_lighting = calculate_lighting(surface_normal, light_direction);
+        vec3 lit_cloud_color = cloud_color * light_color * cloud_lighting;
+
+        // Blend clouds on top of surface
+        vec3 final_color = mix(surface_final, lit_cloud_color, cloud_mask * cloud_opacity);
+
+        // Apply planet mask to create final color
+        final_color *= planet_mask;
+
+        // === OUTLINE EFFECT ===
+        if (highlight_enabled && original_distance > planet_radius - edge_softness) {
+            float outline_inner = planet_radius;
+            float outline_outer = planet_radius + outline_width * 0.01;
+
+            if (original_distance >= outline_inner && original_distance <= outline_outer) {
+                float outline_factor = 1.0 - smoothstep(outline_inner, outline_outer, original_distance);
+                final_color = mix(final_color, highlight_color.rgb, outline_factor);
+                planet_mask = max(planet_mask, outline_factor * highlight_color.a);
+            }
+        }
+
+        // Set output color with alpha for transparency
+        COLOR = vec4(final_color, planet_mask);
+
+    }
 }
